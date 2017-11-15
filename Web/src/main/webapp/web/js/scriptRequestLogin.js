@@ -43,8 +43,7 @@ function logIn() {
 	else {
 		loginUser(url, "", data);
 	}
-	document.querySelector('.loginLogIn').value = "";
-	document.querySelector('.passLogIn').value = "";
+
 }
 
 function isEmpty(str, str2) {
@@ -55,6 +54,8 @@ function isEmpty(str, str2) {
 async function loginUser(url, param, data) {
 	try {
 		access(await post(url, param, data));
+        document.querySelector('.loginLogIn').value = "";
+        document.querySelector('.passLogIn').value = "";
 	} catch (error) {
 		document.querySelector('.errorLogin').innerHTML = document.querySelector('.accessDenied').value;
 	}
@@ -64,7 +65,6 @@ async function loginUser(url, param, data) {
 
 
 function access(response) {
-	
 	var newUser = JSON.parse(response);
 	if (newUser.role == true) {
 		loginStatus = response.substring(4);
@@ -73,17 +73,18 @@ function access(response) {
 		document.querySelector('.exit').style.display = "block";
 		document.querySelector('.errorLogin').innerHTML = "";
 		document.querySelector('.admin').style.display = "block";
-		if (typeof loginCallBack == 'function') {
+		if (typeof loginCallBack === 'function') {
 			loginCallBack();
-		};
+		}
+		;
 		loginCallBack = '';
 	} else {
 		document.querySelector('.windowLogIn').style.display = "none";
-		document.querySelector('.login').innerText = newUse.status;
+		document.querySelector('.login').innerText = newUse.name;
 		document.querySelector('.exit').style.display = "block";
 		document.querySelector('.errorLogin').innerHTML = "";
 
-		if (typeof loginCallBack == 'function') {
+		if (typeof loginCallBack === 'function') {
 			loginCallBack();
 		}
 		;

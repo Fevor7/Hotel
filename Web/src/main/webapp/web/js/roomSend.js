@@ -1,8 +1,6 @@
 async function showRoomList(pageNumber) {
 	try {
-		var list = await get2('room?', {
-			pageNumber: pageNumber,
-		});
+		var list = await get2('room/page/'+pageNumber);
 		var template = await fetchTemplate3('room');
 		createTable(list, template, 'roomList');
 		return list;

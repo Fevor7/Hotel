@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
-<fmt:setLocale value="${language}" scope="session" />
+<fmt:setLocale value="${language}"/>
 
 <fmt:bundle basename="pagecontent">
 	

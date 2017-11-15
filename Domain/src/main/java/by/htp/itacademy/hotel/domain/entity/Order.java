@@ -154,4 +154,13 @@ public class Order implements Serializable {
 		this.pageNumber = pageNumber;
 	}
 
+    public Order(Date start, Date end, Byte bed, Byte person, BigDecimal min, BigDecimal max, Integer page) {
+        this.dateStart = start;
+        this.dateEnd = end;
+        this.bedNumber = bed;
+        this.personNumber = person;
+        this.minPrice = min;
+        this.maxPrice = max;
+        this.pageNumber = page;
+	}
 }

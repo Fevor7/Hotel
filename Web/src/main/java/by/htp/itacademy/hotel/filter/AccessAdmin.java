@@ -39,7 +39,7 @@ public class AccessAdmin implements Filter {
 		Boolean presenceAction = actionList.contains(action.toLowerCase());
 		if (presenceAction && (!user.getRole())) {
 			resp.getWriter().print(RESPONSE_ERROR);
-			return;
+            return;
 		}
 		chain.doFilter(request, response);
 	}

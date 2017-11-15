@@ -1,12 +1,12 @@
 package by.htp.itacademy.hotel.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import by.htp.itacademy.hotel.domain.entity.Order;
 import by.htp.itacademy.hotel.domain.entity.Room;
 import by.htp.itacademy.hotel.domain.vo.ListPage;
 import by.htp.itacademy.hotel.service.exception.ServiceNoRoomFoundException;
@@ -24,65 +24,88 @@ import static by.htp.itacademy.hotel.util.Parameter.*;
 @RestController
 @RequestMapping("room")
 public class RoomController {
-	
-	@Autowired
-	private RoomService roomService;
 
-	@GetMapping
-	private ResponseEntity<ListPage<Room>> getRoomList(@RequestParam("pageNumber") Integer pageNumber, HttpSession session) {
-		ResponseEntity<ListPage<Room>> response = null;
-		ListPage<Room> listPage = new ListPage<>(pageNumber, AMOUNT_ELEMENTS, ROOM_LIST);
-		try {
-			roomService.roomList(listPage);
-			loadingDundle(listPage.getData(), fetchLanguage(session));
-			response = new ResponseEntity<ListPage<Room>>(listPage, HttpStatus.OK);
-		} catch (ServiceNoRoomFoundException e) {
-			response = new ResponseEntity<ListPage<Room>>(HttpStatus.NO_CONTENT);
-		}
-		return response;
-	}
+    @Autowired
+    private RoomService roomService;
 
-	@GetMapping("type")
-	public ResponseEntity<List<TypeRoom>> getRoomTypeList(HttpSession session) {
-		List<TypeRoom> list = null;
-		try {
-			list = roomService.typeRoomList(null);
-			setValueType(list, fetchLanguage(session));
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<List<TypeRoom>>(list, HttpStatus.OK);
-	}
+    @GetMapping("page/{number}")
+    private ResponseEntity<ListPage<Room>> getRoomList(@PathVariable("number") Integer pageNumber, HttpSession session) {
+        ResponseEntity<ListPage<Room>> response = null;
+        ListPage<Room> listPage = new ListPage<>(pageNumber, AMOUNT_ELEMENTS, ROOM_LIST);
+        try {
+            roomService.roomList(listPage);
+            loadingDundle(listPage.getData(), fetchLanguage(session));
+            response = new ResponseEntity<ListPage<Room>>(listPage, HttpStatus.OK);
+        } catch (ServiceNoRoomFoundException e) {
+            response = new ResponseEntity<ListPage<Room>>(HttpStatus.NO_CONTENT);
+        }
+        return response;
+    }
 
-	/**
-	 * The method takes the meaning of the language
-	 *
-	 */
-	String fetchLanguage(HttpSession session) {
-		String language = (String) session.getAttribute(REQUEST_ACTION_LANGUAGE);
-		if (!LANGLIST.contains(language)) {
-			language = LANGUAGE_RU;
-		}
-		return language;
-	}
+    @GetMapping("type")
+    public ResponseEntity<List<TypeRoom>> getRoomTypeList(HttpSession session) {
+        List<TypeRoom> list = null;
+        try {
+            list = roomService.typeRoomList();
+            setValueType(list, fetchLanguage(session));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<List<TypeRoom>>(list, HttpStatus.OK);
+    }
 
-	private void setValueType(List<TypeRoom> list, String language) {
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
-		for (TypeRoom type : list) {
-			String value = type.getValue();
-			type.setValue(bundle.getString(value));
-		}
-	}
+    @GetMapping
+    public ResponseEntity<ListPage<Room>> roomSearch(
+            @RequestParam(value = "dateStart", defaultValue = "2017-01-01") Date start,
+            @RequestParam(value = "dateEnd", defaultValue = "2017-01-01") Date end,
+            @RequestParam(value = "bedNumber", defaultValue = "1") Byte bed,
+            @RequestParam(value = "personNumber", defaultValue = "1") Byte person,
+            @RequestParam(value = "minPrice", defaultValue = "0") BigDecimal min,
+            @RequestParam(value = "maxPrice", defaultValue = "0") BigDecimal max,
+            @RequestParam(value = "idTypeRoom", defaultValue = "1") Long idType,
+            @RequestParam(value = "pageNumber", defaultValue = "0") Integer page,
+            HttpSession session) {
+        ResponseEntity<ListPage<Room>> response = null;
+        try {
+            Order order = new Order(start, end, bed, person, min, max, idType);
+            ListPage<Room> listPage = new ListPage<>(page, AMOUNT_ELEMENTS, REQUEST_ACTION_ROOM_SEARCH);
+            roomService.searchRoom(listPage, order);
+            loadingDundle(listPage.getData(), fetchLanguage(session));
+            response = new ResponseEntity<ListPage<Room>>(listPage, HttpStatus.OK);
+        } catch (ServiceNoRoomFoundException | IllegalArgumentException e) {
+            response = new ResponseEntity<ListPage<Room>>(HttpStatus.NO_CONTENT);
+        }
+        return response;
+    }
 
-	private void loadingDundle(List<Room> list, String language) {
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
-		HashSet<TypeRoom> set = new HashSet<>();
-		for (Room room : list) {
-			set.add(room.getTypeRoom());
-		}
-		for (TypeRoom type : set) {
-			type.setValue(bundle.getString(type.getValue()));
-		}
-	}
-	
+    /**
+     * The method takes the meaning of the language
+     */
+    String fetchLanguage(HttpSession session) {
+        String language = (String) session.getAttribute(REQUEST_ACTION_LANGUAGE);
+        if (!LANGLIST.contains(language)) {
+            language = LANGUAGE_RU;
+        }
+        return language;
+    }
+
+    private void setValueType(List<TypeRoom> list, String language) {
+        ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
+        for (TypeRoom type : list) {
+            String value = type.getValue();
+            type.setValue(bundle.getString(value));
+        }
+    }
+
+    private void loadingDundle(List<Room> list, String language) {
+        ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
+        Set<TypeRoom> set = new HashSet<>();
+        for (Room room : list) {
+            set.add(room.getTypeRoom());
+        }
+        for (TypeRoom type : set) {
+            type.setValue(bundle.getString(type.getValue()));
+        }
+    }
+
 }

@@ -249,8 +249,10 @@ async function ajaxPostOrder(url, param, data) {
 	} catch (error) {
 		logOut();
 		document.querySelector('.windowLogIn').style.display = "block";
-		loginCallBack = function() {
-			ajaxPostOrder(url, param, data);
+		loginCallBack = async function() {
+            var template = await post(url, param, data);
+            document.querySelector('.message').innerHTML = document.querySelector('.orderOk').value;
+            document.querySelector('.windowMessage').style.display = "block";
 		}
 	}
 

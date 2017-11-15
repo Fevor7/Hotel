@@ -8,10 +8,8 @@ public interface HotelService {
 	/**
 	 * The method returns the hotel object with the filled-in fields.
 	 * 
-	 * @param language
-	 * 
 	 * @return
 	 * @throws ServiceException
 	 */
-	Hotel hotelInfo(String language) throws ServiceException;
+	Hotel hotelInfo() throws ServiceException;
 }

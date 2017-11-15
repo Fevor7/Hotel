@@ -1,11 +1,7 @@
 package by.htp.itacademy.hotel.service.impl;
 
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -58,11 +54,10 @@ private static final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 	}
 
 	@Override
-	public ListPage<Room> searchRoom(ListPage<Room> listPage, Order order, String language)
+	public ListPage<Room> searchRoom(ListPage<Room> listPage, Order order)
 			throws ServiceNoRoomFoundException {
 		try {
 			roomDao.roomListSearch(listPage, order);
-			loadingDundle(listPage.getData(), language);
 		} catch (SQLException e) {
 			LOG.error(LOG_ERROR + e.getMessage());
 		}
@@ -87,11 +82,10 @@ private static final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 	}
 
 	@Override
-	public List<TypeRoom> typeRoomList(String language) throws ServiceException {
+	public List<TypeRoom> typeRoomList() throws ServiceException {
 		List<TypeRoom> list = null;
 		try {
 			list = typeRoomDao.getAll();
-			//setValueType(list, language);
 		} catch (HibernateException | MissingResourceException e) {
 			LOG.error(LOG_ERROR + e.getMessage());
 		}
@@ -99,17 +93,6 @@ private static final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 			throw new ServiceException(TYPE_ROOM_EXCEPTION);
 		}
 		return list;
-	}
-
-	private void loadingDundle(List<Room> list, String language) {
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
-		HashSet<TypeRoom> set = new HashSet<>();
-		for (Room room : list) {
-			set.add(room.getTypeRoom());
-		}
-		for (TypeRoom type : set) {
-			type.setValue(bundle.getString(type.getValue()));
-		}
 	}
 
 }

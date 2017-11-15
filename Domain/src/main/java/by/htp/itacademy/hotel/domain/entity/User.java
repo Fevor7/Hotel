@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +34,7 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String login;
-	private Long hashCodePass;
+	private Integer hashCodePass;
 	@Transient
 	private String password;
 	private String name;
@@ -49,12 +50,12 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public User(String login, Long hashLong) {
+	public User(String login, Integer hashLong) {
 		this.login = login;
 		this.hashCodePass = hashLong;
 	}
 
-	public User(String login, Long hashPassUser, String name, String surname, String email, Boolean role) {
+	public User(String login, Integer hashPassUser, String name, String surname, String email, Boolean role) {
 		this.login = login;
 		this.hashCodePass = hashPassUser;
 		this.name = name;
@@ -62,4 +63,38 @@ public class User implements Serializable {
 		this.email = email;
 		this.role = role;
 	}
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public User setHashCodePass(Integer hashCodePass) {
+        this.hashCodePass = hashCodePass;
+        return this;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public User setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public User setSurname(String surname) {
+        this.surname = surname;
+        return this;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public User setRole(Boolean role) {
+        this.role = role;
+        return this;
+    }
 }

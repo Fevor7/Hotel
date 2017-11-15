@@ -33,8 +33,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User logIn(User user) throws ServiceNoSuchUserException {
 		User newUser = null;
-		user.setHashCodePass((long) user.getPassword().hashCode());
-		user.setPassword(null);
+		user.setHashCodePass(user.getPassword().hashCode()).setPassword(null);
 		try {
 			newUser= dao.logIn(user);
 		} catch (PersistenceException e) {
@@ -47,7 +46,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signUp(User user) throws ServiceException {
 		try {
-			dao.add(user);
+            user.setHashCodePass(user.getPassword().hashCode())
+                    .setPassword(null)
+                    .setRole(false);
+            dao.add(user);
 			LOG.info(LOG_USER_SIGNUP + user.getLogin());
 		} catch (PersistenceException e) {
 			throw new ServiceException(e.getMessage());

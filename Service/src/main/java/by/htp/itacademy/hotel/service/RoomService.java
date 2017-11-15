@@ -15,8 +15,6 @@ public interface RoomService {
 	 * The method takes a list of all rooms in the hotel.
 	 * 
 	 * @param listPage
-	 * @param language
-	 * @param order
 	 * 
 	 * @return
 	 * @throws ServiceNoRoomFoundException
@@ -28,11 +26,10 @@ public interface RoomService {
 	 * 
 	 * @param listPage
 	 * @param order
-	 * @param language
 	 * @return
 	 * @throws ServiceNoRoomFoundException
 	 */
-	ListPage<Room> searchRoom(ListPage<Room> listPage, Order order, String language) throws ServiceNoRoomFoundException;
+	ListPage<Room> searchRoom(ListPage<Room> listPage, Order order) throws ServiceNoRoomFoundException;
 
 	/**
 	 * The method returns a list of rooms found by parameters for the administrator.
@@ -50,11 +47,9 @@ public interface RoomService {
 	/**
 	 * The method returns a list of room types in the hotel.
 	 * 
-	 * @param language
-	 * 
 	 * @return
 	 * @throws ServiceException
 	 */
-	List<TypeRoom> typeRoomList(String language) throws ServiceException;
+	List<TypeRoom> typeRoomList() throws ServiceException;
 
 }

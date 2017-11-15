@@ -23,20 +23,14 @@ import static by.htp.itacademy.hotel.util.AddressPage.*;
  */
 public class VerificationHeader implements Filter {
 
-	private static final String SECURITY_HEADER_NAME = "SecurityHeader";
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		String header = req.getHeader(SECURITY_HEADER_NAME);
-		if (header == null) {
-			RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher(PAGE_ERROR);
-			dispatcher.forward(req, resp);
-			return;
-		}
-		chain.doFilter(request, response);
+		String a = req.getParameter("dateStart");
+        System.out.println(a);
+        chain.doFilter(request, response);
 
 	}
 

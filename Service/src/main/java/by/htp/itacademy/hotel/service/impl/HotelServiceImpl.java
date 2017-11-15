@@ -36,38 +36,16 @@ public class HotelServiceImpl implements HotelService {
 	private HotelDao hotelDao;
 
 	@Override
-	public Hotel hotelInfo(String language) throws ServiceException {
+	public Hotel hotelInfo() throws ServiceException {
 		Hotel hotel = null;
 		try {
 			hotel = hotelDao.get(1L);
 			List<FacilitiesHotel> listFacilities = hotel.getFacilities();
-			setFacilities(hotel, listFacilities, language);
-			loadingDundle(hotel, language);
 		} catch (HibernateException | MissingResourceException e) {
 			LOG.error(LOG_ERROR + e.getMessage());
 			throw new ServiceException(e.getMessage());
 		}
 		return hotel;
-	}
-
-	private void loadingDundle(Hotel hotel, String language) {
-		Locale currentLocale = new Locale(language);
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, currentLocale);
-		String name = hotel.getName();
-		hotel.setName(bundle.getString(name));
-		String address = hotel.getAddress();
-		hotel.setAddress(bundle.getString(address));
-		String about = hotel.getAbout();
-		hotel.setAbout(bundle.getString(about));
-	}
-
-	private void setFacilities(Hotel hotel, List<FacilitiesHotel> listFacilities, String language) {
-		Locale currentLocale = new Locale(language);
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, currentLocale);
-		for (FacilitiesHotel facilitiesHotel : listFacilities) {
-			String value = facilitiesHotel.getValue();
-			facilitiesHotel.setValue(bundle.getString(value));
-		}
 	}
 
 }

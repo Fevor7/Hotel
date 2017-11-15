@@ -30,7 +30,6 @@ public class OrderController {
 			responseEntity =  new ResponseEntity<>(HttpStatus.OK);
 		} catch (ServiceException e) {
 			responseEntity =  new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-			e.printStackTrace();
 		}
 		return responseEntity;
 	}
