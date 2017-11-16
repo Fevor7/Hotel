@@ -49,7 +49,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>authorizationUser</filter-name>
-		<url-pattern>/Servlet</url-pattern>
+		<url-pattern>/order</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>accessAdmin</filter-name>

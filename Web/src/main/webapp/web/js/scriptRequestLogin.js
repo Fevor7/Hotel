@@ -4,29 +4,22 @@ function pressEnter(event) {
 	if (!event.shiftKey && event.keyCode == 13)
 		logIn();
 }
-function logOut() {
-	var hiddenField = document.querySelector('.fieldLOGIN').value;
-	document.querySelector('.admin').style.display = "none";
-	var params = 'action=logout';
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			if (request.responseText == "OK") {
-				showFirstPage();
-				loginStatus = "none";
-				document.querySelector('.exit').style.display = "none";
-				document.querySelector('.login').innerText = hiddenField;
-				document.querySelector('.exit').style.display = "none";
-				document.querySelector('.admin').style.display = "none";
-			}
-		}
-	}
-	request.open('POST', 'Servlet');
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send(params);
+
+async function logOut(){
+    try {
+        await put("user/logOut");
+        loginStatus = "none";
+        document.querySelector('.exit').style.display = "none";
+        var hiddenField = document.querySelector('.fieldLOGIN').value;
+        document.querySelector('.login').innerText = hiddenField;
+        document.querySelector('.exit').style.display = "none";
+        document.querySelector('.admin').style.display = "none";
+    } catch (error) {
+        document.querySelector('.errorLogin').innerHTML = document.querySelector('.accessDenied').value;
+    }
+
 }
+
 function logIn() {
 	document.querySelector('.errorLogin').innerHTML = "";
 	var hiddenField3 = document.querySelector('.fillAllFields').value;
@@ -66,6 +59,7 @@ async function loginUser(url, param, data) {
 
 function access(response) {
 	var newUser = JSON.parse(response);
+    UserObject = newUser;
 	if (newUser.role == true) {
 		loginStatus = response.substring(4);
 		document.querySelector('.windowLogIn').style.display = "none";

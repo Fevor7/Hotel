@@ -37,17 +37,11 @@ function showWindowSignUp() {
 	document.querySelector('.passLogIn').value = "";
 }
 
-function switchLang(leng) {
-	var params = 'action=language' + '&' + 'value=' + leng;
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			location.reload();
-		}
-	}
-	request.open('POST', 'Servlet');
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send(params);
+async function switchLang(leng) {
+    try {
+        await put("language/"+leng);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
 }

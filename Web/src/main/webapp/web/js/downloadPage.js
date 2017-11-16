@@ -1,13 +1,15 @@
 nameUser = '';
 surnameUser = '';
 pageValue = '';
+UserObject = '';
 
 function session() {
-	var user = getUserSession();
+    var user = getUserSession();
 	var hiddenField = document.querySelector('.fieldLOGIN').value;
 	if (user.PromiseValue ===  undefined) {
 		document.querySelector('.login').innerText = hiddenField;
 	} else {
+        UserObject = user;
 		nameUser = user.name;
 		surnameUser = user.surname;
 		loginStatus = nameUser;
@@ -180,6 +182,12 @@ function get2(baseUrl, urlParams) {
 
 function post(baseUrl, urlParams, data) {
 	return ajax(baseUrl, urlParams, 'POST', data);
+}
+function put(baseUrl, urlParams, data) {
+    return ajax(baseUrl, urlParams, 'PUT', data);
+}
+function deleteAJAX(baseUrl, urlParams, data) {
+    return ajax(baseUrl, urlParams, 'DELETE', data);
 }
 
 function ajax(baseUrl, params, method, data) {

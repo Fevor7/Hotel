@@ -10,10 +10,7 @@ import by.htp.itacademy.hotel.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.htp.itacademy.hotel.domain.entity.User;
@@ -60,7 +57,7 @@ public class MainController {
         ResponseEntity<Hotel> responseEntity = null;
         try {
             Hotel hotel = hotelService.hotelInfo();
-			loadingDundle(hotel, language);
+            loadingDundle(hotel, language);
             responseEntity = new ResponseEntity<Hotel>(hotel, HttpStatus.OK);
             session.setAttribute(SESSION_PARAMETER_PAGE, REQUEST_ACTION_ABOUT_PAGE);
         } catch (ServiceException e) {
@@ -68,6 +65,11 @@ public class MainController {
             e.printStackTrace();
         }
         return responseEntity;
+    }
+
+    @PutMapping("language/{value}")
+    public void switchLanguage(@PathVariable("value") String value, HttpSession session) {
+        session.setAttribute(REQUEST_ACTION_LANGUAGE, value);
     }
 
     /**

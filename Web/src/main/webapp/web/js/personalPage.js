@@ -16,21 +16,15 @@ function closeWindowCheck(){
 	document.querySelector('.check').style.display = "none";
 }
 
-function showPersonalPage(){
-	get('?action=personalpage', {}, (error, user) => {
-		if (error) {
-			logOutUser();
-		} else {
-			fetchTemplate('personalPage', (error, template) => {
-				if (error) {
-					alert(error.message)
-				} else {
-					createWindowInfo(user, template);
-					showUserOrderList(0);
-				}
-			});
-		}
-	});
+async function showPersonalPage(){
+    try {
+        var user = await get2('session/user');
+        var template = await fetchTemplate3('personalPage');
+        createWindowInfo(user, template);
+        showUserOrderList(0);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function logOutUser() {
@@ -43,7 +37,7 @@ function logOutUser() {
 
 function createWindowInfo(user, template) {
 	var userObject = JSON.parse(user);
-	switchMenu(userObject, template);
+	switchMenu(user, template);
 	document.querySelector('.loginInsert').innerText = userObject.login;
 	document.querySelector('.userNameInsert').innerText = userObject.name;
 	document.querySelector('.userSurname').innerText = userObject.surname;
@@ -63,42 +57,44 @@ function switchMenu(user, template){
 }
 
 
-function showUserOrderList(pageNumber) {
-	get('?action=orderlistuser&', {
-		pagenumber: pageNumber
-	}, (error, listPage) => {
-		if (error) {
-			alert(error.message)
-		} else {
-			fetchTemplate('userOrderList', (error, templateTableOrder) => {
-				if (error) {
-					alert(error.message)
-				} else {
-					createTableUserOrder(pageNumber, listPage, templateTableOrder);
-				}
-			});
-		}
-	});
+async function showUserOrderList(pageNumber) {
+    try {
+        var listPage = await get2('order/user?', {
+            pagenumber: pageNumber
+        });
+        var templateTableOrder = await  fetchTemplate3('userOrderList');
+        createTableUserOrder(pageNumber, listPage, templateTableOrder);
+    } catch (error) {
+        console.log(error);
+    }
+
+	// get('?action=orderlistuser&', {
+	// 	pagenumber: pageNumber
+	// }, (error, listPage) => {
+	// 	if (error) {
+	// 		alert(error.message)
+	// 	} else {
+	// 		fetchTemplate('userOrderList', (error, templateTableOrder) => {
+	// 			if (error) {
+	// 				alert(error.message)
+	// 			} else {
+	// 				createTableUserOrder(pageNumber, listPage, templateTableOrder);
+	// 			}
+	// 		});
+	// 	}
+	// });
 }
 
-function createTableUserOrder(pageNumber, listPage, templateTableOrder){
-	document.querySelector('.insertOrderList').innerHTML = templateTableOrder;
-	get('?action=typeroom&', {
-		pagenumber: pageNumber
-	}, (error, listTypeRoom) => {
-		if (error) {
-			alert(error.message)
-		} else {
-			fetchTemplate('tableLine', (error, templateTableLine) => {
-				if (error) {
-					alert(error.message)
-				} else {
-					createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom);
-					fillTypeRoom(listTypeRoom);
-				}
-			});
-		}
-	});
+async function createTableUserOrder(pageNumber, listPage, templateTableOrder){
+    try {
+        document.querySelector('.insertOrderList').innerHTML = templateTableOrder;
+        var listTypeRoom = await get2('room/type');
+        var templateTableLine = await fetchTemplate3('tableLine');
+        createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom);
+        fillTypeRoom(listTypeRoom);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom) {

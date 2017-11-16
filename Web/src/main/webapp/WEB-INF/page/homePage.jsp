@@ -189,6 +189,5 @@
 				</div>
 			</fmt:bundle>
 		</div>
-		<script type="text/javascript" src="web/js/mainScript.js"></script>
 	</body>
 </html>

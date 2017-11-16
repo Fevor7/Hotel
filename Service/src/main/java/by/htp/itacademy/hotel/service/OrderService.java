@@ -58,7 +58,7 @@ public interface OrderService {
 	 * @return
 	 * @throws ServiceNoOrderFoundException
 	 */
-	ListPage<Order> orderListUser(ListPage<Order> listPage, User user, String language)
+	ListPage<Order> orderListUser(ListPage<Order> listPage, User user)
 			throws ServiceNoOrderFoundException;
 
 	/**

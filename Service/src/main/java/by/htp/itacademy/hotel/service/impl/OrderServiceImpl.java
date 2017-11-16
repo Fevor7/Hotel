@@ -123,11 +123,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ListPage<Order> orderListUser(ListPage<Order> listPage, User user, String language)
+	public ListPage<Order> orderListUser(ListPage<Order> listPage, User user)
 			throws ServiceNoOrderFoundException {
 		try {
 			listPage = orderDao.fetchUserOrder(listPage, user);
-			loadingDundle(listPage.getData(), language);
 		} catch (HibernateException e) {
 			LOG.error(LOG_ERROR + e.getMessage() + LOG_USER + user.getId());
 		}

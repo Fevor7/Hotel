@@ -38,9 +38,9 @@ public class AuthorizationUser implements Filter {
 		HttpSession session = req.getSession(true);
 		String action = req.getParameter(REQUEST_PARAMETER_ACTION);
 		User user = (User) session.getAttribute(SESSION_PARAMETER_USER);
-		Boolean presenceAction = actionList.contains(action.toLowerCase());
-		if (presenceAction && (user == null)) {
-            System.out.println("ddd");
+		//Boolean presenceAction = actionList.contains(action.toLowerCase());
+		if (user == null) {
+		    resp.setStatus(500);
             return;
 		}
 		chain.doFilter(request, response);
