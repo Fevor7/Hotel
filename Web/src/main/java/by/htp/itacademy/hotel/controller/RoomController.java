@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import by.htp.itacademy.hotel.domain.entity.Order;
 import by.htp.itacademy.hotel.domain.entity.Room;
+import by.htp.itacademy.hotel.domain.entity.StatusOrder;
 import by.htp.itacademy.hotel.domain.vo.ListPage;
 import by.htp.itacademy.hotel.service.exception.ServiceNoRoomFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import static by.htp.itacademy.hotel.util.Parameter.*;
 
 @RestController
 @RequestMapping("room")
-public class RoomController {
+public class RoomController extends  AbstractController{
 
     @Autowired
     private RoomService roomService;
@@ -34,7 +35,7 @@ public class RoomController {
         ListPage<Room> listPage = new ListPage<>(pageNumber, AMOUNT_ELEMENTS, ROOM_LIST);
         try {
             roomService.roomList(listPage);
-            loadingDundle(listPage.getData(), fetchLanguage(session));
+            loadingDundleRoom(listPage.getData(), fetchLanguage(session));
             response = new ResponseEntity<ListPage<Room>>(listPage, HttpStatus.OK);
         } catch (ServiceNoRoomFoundException e) {
             response = new ResponseEntity<ListPage<Room>>(HttpStatus.NO_CONTENT);
@@ -70,23 +71,12 @@ public class RoomController {
             Order order = new Order(start, end, bed, person, min, max, idType);
             ListPage<Room> listPage = new ListPage<>(page, AMOUNT_ELEMENTS, REQUEST_ACTION_ROOM_SEARCH);
             roomService.searchRoom(listPage, order);
-            loadingDundle(listPage.getData(), fetchLanguage(session));
+            loadingDundleRoom(listPage.getData(), fetchLanguage(session));
             response = new ResponseEntity<ListPage<Room>>(listPage, HttpStatus.OK);
         } catch (ServiceNoRoomFoundException | IllegalArgumentException e) {
             response = new ResponseEntity<ListPage<Room>>(HttpStatus.NO_CONTENT);
         }
         return response;
-    }
-
-    /**
-     * The method takes the meaning of the language
-     */
-    String fetchLanguage(HttpSession session) {
-        String language = (String) session.getAttribute(REQUEST_ACTION_LANGUAGE);
-        if (!LANGLIST.contains(language)) {
-            language = LANGUAGE_RU;
-        }
-        return language;
     }
 
     private void setValueType(List<TypeRoom> list, String language) {
@@ -97,7 +87,7 @@ public class RoomController {
         }
     }
 
-    private void loadingDundle(List<Room> list, String language) {
+    private void loadingDundleRoom(List<Room> list, String language) {
         ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
         Set<TypeRoom> set = new HashSet<>();
         for (Room room : list) {
@@ -107,5 +97,7 @@ public class RoomController {
             type.setValue(bundle.getString(type.getValue()));
         }
     }
+
+
 
 }

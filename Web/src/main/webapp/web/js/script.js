@@ -5,36 +5,36 @@ securityHeaderValue = "javathebest";
 
 
 function closeWindowLogin() {
-	document.querySelector('.windowLogIn').style.display = "none";
-	document.querySelector('.errorLogin').innerHTML = "";
-	document.querySelector('.loginLogIn').value = "";
-	document.querySelector('.passLogIn').value = "";
+	getNode('.windowLogIn').style.display = "none";
+	getNode('.errorLogin').innerHTML = "";
+	getNode('.loginLogIn').value = "";
+	getNode('.passLogIn').value = "";
 	loginCallBack = '';
 
 }
 
 function showWindowLogin() {
-	var hiddenField = document.querySelector('.fieldLOGIN').value;
-	var login = document.querySelector('.login').innerText;
-	if (document.querySelector('.windowLogIn').style.display != "block") {
+	var hiddenField = getNode('.fieldLOGIN').value;
+	var login = getNode('.login').innerText;
+	if (getNode('.windowLogIn').style.display != "block") {
 		if (loginStatus == "none") {
-			document.querySelector('.windowLogIn').style.display = "block";
+			getNode('.windowLogIn').style.display = "block";
 		} else {
 			showPersonalPage();
 		}
 	} else {
-		document.querySelector('.windowLogIn').style.display = "none";
+		getNode('.windowLogIn').style.display = "none";
 	}
-	document.querySelector('.errorLogin').innerHTML = "";
+	getNode('.errorLogin').innerHTML = "";
 
 }
 
 function showWindowSignUp() {
-	document.querySelector('.errorLogin').innerHTML = "";
-	document.querySelector('.errorSignUp').innerHTML = "";
-	document.querySelector('.windowSignUp').style.display = "block";
-	document.querySelector('.loginLogIn').value = "";
-	document.querySelector('.passLogIn').value = "";
+	getNode('.errorLogin').innerHTML = "";
+	getNode('.errorSignUp').innerHTML = "";
+	getNode('.windowSignUp').style.display = "block";
+	getNode('.loginLogIn').value = "";
+	getNode('.passLogIn').value = "";
 }
 
 async function switchLang(leng) {

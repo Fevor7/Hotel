@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
-	
+<fmt:setLocale value="${language}"/>
 	<div align="center" class="paging" >
 	<br>
 		<div class="topPaging"></div>

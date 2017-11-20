@@ -24,6 +24,7 @@ public class ListPage<T> implements Serializable {
 	private Integer page;
 	private List<T> data;
 	private Long total;
+
 	private Integer maxPerPage;
 	private String command;
 
@@ -57,6 +58,8 @@ public class ListPage<T> implements Serializable {
 		this.total = total;
 		return this;
 	}
+
+
 
 
 }

@@ -68,7 +68,7 @@ private static final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 	}
 
 	@Override
-	public ListPage<Room> searchRoomAdmin(ListPage<Room> listPage, Order order, String language)
+	public ListPage<Room> searchRoomAdmin(ListPage<Room> listPage, Order order)
 			throws ServiceNoRoomFoundException {
 		try {
 			roomDao.roomListSearchAdmin(listPage, order);

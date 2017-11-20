@@ -1,6 +1,5 @@
 package by.htp.itacademy.hotel.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import by.htp.itacademy.hotel.domain.entity.*;
@@ -22,11 +21,11 @@ import  static by.htp.itacademy.hotel.util.Parameter.*;
 
 @RestController
 @RequestMapping("order")
-public class OrderController {
+public class OrderController extends AbstractController{
 	
 	@Autowired
 	private OrderService orderService;
-    private static final String COMMAND = "orderListUser";
+    private static final String COMMAND = "orderlistadmin";
 
 	@PostMapping
 	public ResponseEntity<Order> createOrder(@RequestBody Order order, HttpSession session) {
@@ -40,16 +39,35 @@ public class OrderController {
 		return responseEntity;
 	}
 
+	@GetMapping
+    public ResponseEntity<ListPage<Order>> getOrderList(
+            @RequestParam(name = "type", defaultValue = "0") Long id,
+            @RequestParam(name = "pagenumber", defaultValue = "0") Integer pageNumber,
+            HttpSession session) {
+        ResponseEntity<ListPage<Order>> responseEntity = null;
+        User user = (User) session.getAttribute(SESSION_PARAMETER_USER);
+        ListPage<Order> listPage = new ListPage<>(pageNumber, AMOUNT_ELEMENTS, COMMAND);
+        try {
+            orderService.orderList(listPage, id, user);
+            loadingDundleOrder(listPage.getData(),fetchLanguage(session));
+            session.setAttribute(SESSION_PARAMETER_PAGE, REQUEST_ACTION_ORDER_LIST_ADMIN);
+            responseEntity = new ResponseEntity<ListPage<Order>>(listPage, HttpStatus.OK);
+        } catch (ServiceNoOrderFoundException e) {
+            responseEntity = new ResponseEntity<ListPage<Order>>(HttpStatus.NOT_FOUND);
+        }
+        return responseEntity;
+    }
+
 	@GetMapping("user")
     public ResponseEntity<ListPage<Order>> userOrderList(@RequestParam("pagenumber") Integer pageNumber, HttpSession session) {
         ResponseEntity<ListPage<Order>> responseEntity = null;
 	    try {
             User user = (User) session.getAttribute(SESSION_PARAMETER_USER);
-            System.out.println(pageNumber);
-            ListPage<Order> listPage = new ListPage<Order>(pageNumber, AMOUNT_ELEMENTS, COMMAND);
+            ListPage<Order> listPage = new ListPage<>(pageNumber, AMOUNT_ELEMENTS, COMMAND);
             orderService.orderListUser(listPage, user);
-            loadingDundle(listPage.getData(), fetchLanguage(session));
+            loadingDundleOrder(listPage.getData(), fetchLanguage(session));
             responseEntity = new ResponseEntity<ListPage<Order>>(listPage, HttpStatus.OK);
+            session.setAttribute(SESSION_PARAMETER_PAGE, REQUEST_ACTION_PERSONALPAGE);
         } catch (ServiceNoOrderFoundException e) {
 	        e.printStackTrace();
             responseEntity = new ResponseEntity<ListPage<Order>>(HttpStatus.NOT_FOUND);
@@ -57,7 +75,33 @@ public class OrderController {
         return responseEntity;
     }
 
-    private void loadingDundle(List<Order> list, String language) {
+    @PutMapping
+    public ResponseEntity<Order> orderUpdate(@RequestBody Order order, HttpSession session) {
+        ResponseEntity<Order> responseEntity = null;
+        User user = (User) session.getAttribute(SESSION_PARAMETER_USER);
+        try {
+            orderService.updateOrder(order, user);
+            responseEntity = new ResponseEntity<Order>(HttpStatus.OK);
+        } catch (ServiceException e) {
+            responseEntity = new ResponseEntity<Order>(HttpStatus.LOCKED);
+        }
+        return responseEntity;
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Order> deleteOrder(@RequestBody Order order, HttpSession session) {
+        ResponseEntity<Order> responseEntity = null;
+        try {
+            User user = (User) session.getAttribute(SESSION_PARAMETER_USER);
+            orderService.orderDelete(order, user);
+            responseEntity = new ResponseEntity<Order>(HttpStatus.OK);
+        } catch (ServiceException e) {
+            responseEntity = new ResponseEntity<Order>(HttpStatus.LOCKED);
+        }
+        return responseEntity;
+    }
+
+    protected void loadingDundleOrder(List<Order> list, String language) {
         ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
         for (Order order : list) {
             TypeRoom typeRoomNew = new TypeRoom();
@@ -73,11 +117,4 @@ public class OrderController {
         }
     }
 
-    String fetchLanguage(HttpSession session) {
-        String language = (String) session.getAttribute(REQUEST_ACTION_LANGUAGE);
-        if (!LANGLIST.contains(language)) {
-            language = LANGUAGE_RU;
-        }
-        return language;
-    }
 }

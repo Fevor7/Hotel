@@ -2,19 +2,21 @@ package by.htp.itacademy.hotel.controller;
 
 import javax.servlet.http.HttpSession;
 
-import by.htp.itacademy.hotel.domain.entity.FacilitiesHotel;
-import by.htp.itacademy.hotel.domain.entity.Hotel;
-import by.htp.itacademy.hotel.domain.entity.Unit;
+import by.htp.itacademy.hotel.domain.entity.*;
+import by.htp.itacademy.hotel.domain.vo.ListPage;
 import by.htp.itacademy.hotel.service.HotelService;
+import by.htp.itacademy.hotel.service.RoomService;
 import by.htp.itacademy.hotel.service.exception.ServiceException;
+import by.htp.itacademy.hotel.service.exception.ServiceNoRoomFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.htp.itacademy.hotel.domain.entity.User;
-
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -23,7 +25,7 @@ import static by.htp.itacademy.hotel.util.Parameter.*;
 
 @RestController
 @RequestMapping("/")
-public class MainController {
+public class MainController extends  AbstractController{
 
     @Autowired
     private HotelService hotelService;
@@ -57,7 +59,7 @@ public class MainController {
         ResponseEntity<Hotel> responseEntity = null;
         try {
             Hotel hotel = hotelService.hotelInfo();
-            loadingDundle(hotel, language);
+            loadingDundleHotel(hotel, language);
             responseEntity = new ResponseEntity<Hotel>(hotel, HttpStatus.OK);
             session.setAttribute(SESSION_PARAMETER_PAGE, REQUEST_ACTION_ABOUT_PAGE);
         } catch (ServiceException e) {
@@ -72,12 +74,6 @@ public class MainController {
         session.setAttribute(REQUEST_ACTION_LANGUAGE, value);
     }
 
-    /**
-     * The method checks the record of the current language of the page.
-     *
-     * @param session
-     * @return
-     */
     private void settingLanguage(HttpSession session) {
         Object languageValue = session.getAttribute(REQUEST_ACTION_LANGUAGE);
         if (languageValue == null) {
@@ -85,7 +81,7 @@ public class MainController {
         }
     }
 
-    private void loadingDundle(Hotel hotel, String language) {
+    private void loadingDundleHotel(Hotel hotel, String language) {
         Locale currentLocale = new Locale(language);
         ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, currentLocale);
         String name = hotel.getName();
@@ -106,11 +102,4 @@ public class MainController {
         }
     }
 
-    String fetchLanguage(HttpSession session) {
-        String language = (String) session.getAttribute(REQUEST_ACTION_LANGUAGE);
-        if (!LANGLIST.contains(language)) {
-            language = LANGUAGE_RU;
-        }
-        return language;
-    }
 }

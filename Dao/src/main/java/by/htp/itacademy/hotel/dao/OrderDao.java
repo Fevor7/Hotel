@@ -12,11 +12,6 @@ public interface OrderDao extends IDao<Order>{
 	 * The method returns a list of all orders.
 	 * 
 	 * @param listPage
-	 * @param language
-	 * 
-	 * @param order
-	 * 
-	 * @param sqlRequest
 	 * @return
 	 */
 	ListPage<Order> getAll(ListPage<Order> listPage) throws HibernateException;
@@ -25,13 +20,10 @@ public interface OrderDao extends IDao<Order>{
 	 * The method that returns the list of orders received from the database.
 	 * 
 	 * @param listPage
-	 * 
-	 * @param order
-	 * 
-	 * @param sqlRequest
+	 *
 	 * @return
 	 */
-	ListPage<Order> fetchSomethingOrder(ListPage<Order> listPage, Order order) throws HibernateException;
+	ListPage<Order> fetchSomethingOrder(ListPage<Order> listPage, Long id) throws HibernateException;
 
 	/**
 	 * The method returns a list of user orders read from the database.
@@ -39,7 +31,6 @@ public interface OrderDao extends IDao<Order>{
 	 * @param listPage
 	 * 
 	 * @param user
-	 * @param language
 	 * @return
 	 */
 	ListPage<Order> fetchUserOrder(ListPage<Order> listPage, User user) throws HibernateException;

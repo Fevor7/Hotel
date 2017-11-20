@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
-
+<fmt:setLocale value="${language}"/>
 <fmt:bundle basename="pagecontent" prefix="">	
 	<div class="windowEditOrderAdmin" align="center">
 	

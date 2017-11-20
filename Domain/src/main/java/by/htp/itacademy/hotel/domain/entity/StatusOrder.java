@@ -16,5 +16,9 @@ public class StatusOrder extends Unit{
 	public StatusOrder(Long id, String value) {
 		super(id, value);
 	}
+
+	public StatusOrder(Long id) {
+		super(id);
+	}
 	
 }

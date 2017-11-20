@@ -1,7 +1,7 @@
 async function showRoomPage(pageNumber) {
     try {
         var template = await get2('page/room');
-        document.querySelector('.insertPage').innerHTML = template;
+        getNode('.insertPage').innerHTML = template;
         loadFilterRoom();
         showRoomList(pageNumber);
     } catch (error) {
@@ -21,25 +21,25 @@ async function loadFilterRoom() {
 }
 
 function searchForRoom(pageNumber) {
-    document.querySelector('.errorOrder').innerHTML = "";
-    var dateStart = document.querySelector('.dateStart').value;
-    var dateEnd = document.querySelector('.dateEnd').value;
+    getNode('.errorOrder').innerHTML = "";
+    var dateStart = getNode('.dateStart').value;
+    var dateEnd = getNode('.dateEnd').value;
     if (!validateData(dateStart)) {
-        var incorrectName = document.querySelector('.errorCheckIn').value;
-        document.querySelector('.errorOrder').innerHTML = incorrectName;
+        var incorrectName = getNode('.errorCheckIn').value;
+        getNode('.errorOrder').innerHTML = incorrectName;
         return;
     }
     if (!validateData(dateEnd)) {
-        var incorrectName = document.querySelector('.errorCheckOut').value;
-        document.querySelector('.errorOrder').innerHTML = incorrectName;
+        var incorrectName = getNode('.errorCheckOut').value;
+        getNode('.errorOrder').innerHTML = incorrectName;
         return;
     }
 
-    var bed = document.querySelector('.bed').value;
-    var person = document.querySelector('.person').value;
-    var minPrice = document.querySelector('.inputMinPrice').value;
-    var maxPrice = document.querySelector('.inputMaxPrice').value;
-    var idTypeRoom = document.querySelector('.typeRoom').value;
+    var bed = getNode('.bed').value;
+    var person = getNode('.person').value;
+    var minPrice = getNode('.inputMinPrice').value;
+    var maxPrice = getNode('.inputMaxPrice').value;
+    var idTypeRoom = getNode('.typeRoom').value;
     var Order = {
         dateStart: dateStart,
         dateEnd: dateEnd,

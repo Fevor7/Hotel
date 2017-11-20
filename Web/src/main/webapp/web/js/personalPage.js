@@ -13,7 +13,7 @@ typeRoomValue = '';
 relogin = true;
 
 function closeWindowCheck(){
-	document.querySelector('.check').style.display = "none";
+	getNode('.check').style.display = "none";
 }
 
 async function showPersonalPage(){
@@ -29,7 +29,7 @@ async function showPersonalPage(){
 
 function logOutUser() {
 	logOut();
-	document.querySelector('.windowLogIn').style.display = "block";
+	getNode('.windowLogIn').style.display = "block";
 	loginCallBack = function() {
 		showPersonalPage();
 	}
@@ -38,22 +38,22 @@ function logOutUser() {
 function createWindowInfo(user, template) {
 	var userObject = JSON.parse(user);
 	switchMenu(user, template);
-	document.querySelector('.loginInsert').innerText = userObject.login;
-	document.querySelector('.userNameInsert').innerText = userObject.name;
-	document.querySelector('.userSurname').innerText = userObject.surname;
-	document.querySelector('.userEmailInsert').innerText = userObject.email;
+	getNode('.loginInsert').innerText = userObject.login;
+	getNode('.userNameInsert').innerText = userObject.name;
+	getNode('.userSurname').innerText = userObject.surname;
+	getNode('.userEmailInsert').innerText = userObject.email;
 }
 
 function switchMenu(user, template){
-	document.querySelector('.insertPage').innerHTML = template;
+	getNode('.insertPage').innerHTML = template;
 	nameUser = user.name;
 	surnameUser = user.surname;
 	var role = user.role;
-	var roleLine = document.querySelector('.roleUser').value;
+	var roleLine = getNode('.roleUser').value;
 	if (role == "true") {
-		roleLine = document.querySelector('.roleAdmin').value;
+		roleLine = getNode('.roleAdmin').value;
 	}
-	document.querySelector('.roleLine').innerHTML = roleLine;
+	getNode('.roleLine').innerHTML = roleLine;
 }
 
 
@@ -68,26 +68,11 @@ async function showUserOrderList(pageNumber) {
         console.log(error);
     }
 
-	// get('?action=orderlistuser&', {
-	// 	pagenumber: pageNumber
-	// }, (error, listPage) => {
-	// 	if (error) {
-	// 		alert(error.message)
-	// 	} else {
-	// 		fetchTemplate('userOrderList', (error, templateTableOrder) => {
-	// 			if (error) {
-	// 				alert(error.message)
-	// 			} else {
-	// 				createTableUserOrder(pageNumber, listPage, templateTableOrder);
-	// 			}
-	// 		});
-	// 	}
-	// });
 }
 
 async function createTableUserOrder(pageNumber, listPage, templateTableOrder){
     try {
-        document.querySelector('.insertOrderList').innerHTML = templateTableOrder;
+        getNode('.insertOrderList').innerHTML = templateTableOrder;
         var listTypeRoom = await get2('room/type');
         var templateTableLine = await fetchTemplate3('tableLine');
         createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom);
@@ -106,10 +91,10 @@ function createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom) 
 		tr.className = 'trTag';
 		tr.innerHTML = templateTableLine;
 		if (i==list.length) {
-			document.querySelector('.tableLine').appendChild(tr);
+			getNode('.tableLine').appendChild(tr);
 		} else {
-			var trFirst = document.querySelector('.trTag');
-			document.querySelector('.tableLine').insertBefore(tr, trFirst);
+			var trFirst = getNode('.trTag');
+			getNode('.tableLine').insertBefore(tr, trFirst);
 		}
 		fillData(list[i-1]);
 	}
@@ -118,25 +103,27 @@ function createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom) 
 
 
 function fillData(order) {
-	document.querySelector('.idOrderTable').innerHTML = order.orderId;
+	getNode('.idOrderTable').innerHTML = order.orderId;
 	if(order.room!=null) {
-	document.querySelector('.numberRoomOrderTable').innerHTML = order.room.number;
+	getNode('.numberRoomOrderTable').innerHTML = order.room.number;
 	}
-	document.querySelector('.dataStartOrderTable').innerHTML = order.dateStart;
-	document.querySelector('.dataEndOrderTable').innerHTML = order.dateEnd;
-	document.querySelector('.personOrderTable').innerHTML = order.personNumber;
-	document.querySelector('.roomOrderTable').innerHTML = order.bedNumber;
-	document.querySelector('.typeRoomTable').innerHTML = order.typeRoom.value;
-	document.querySelector('.typeRoomTable').dataset.prop = order.typeRoom.id;
-	document.querySelector('.totalAmountTable').innerHTML = order.totalAmount;
-	document.querySelector('.statusTable').innerHTML = order.orderStatus.value;
-	document.querySelector('.statusTable').dataset.status = order.orderStatus.id;
+	getNode('.dataStartOrderTable').innerHTML = editDate(order.dateStart);
+	getNode('.dataEndOrderTable').innerHTML = editDate(order.dateEnd);
+	getNode('.personOrderTable').innerHTML = order.personNumber;
+	getNode('.roomOrderTable').innerHTML = order.bedNumber;
+	getNode('.typeRoomTable').innerHTML = order.typeRoom.value;
+	getNode('.typeRoomTable').dataset.prop = order.typeRoom.id;
+	if (order.totalAmount!=undefined) {
+        getNode('.totalAmountTable').innerHTML = order.totalAmount;
+	}
+	getNode('.statusTable').innerHTML = order.orderStatus.value;
+	getNode('.statusTable').dataset.status = order.orderStatus.id;
 }
 
 function createPagingOrder(inDiv, listPage, method) {
 	var quantity = Math.ceil((listPage.total) / (listPage.maxPerPage));
 	if (quantity > 1) {
-		var insertDiv = document.querySelector(inDiv);
+		var insertDiv = getNode(inDiv);
 		var page = document.createElement('div');
         page.style.color = "#002F4C";
 		createPageline(page);
@@ -152,7 +139,7 @@ function fillTypeRoom(typeRoomList) {
 }
 
 function createSelect(list, type){
-	var select = document.querySelector(type);
+	var select = getNode(type);
 	for (var i = 0; i<list.length; i++) {
 		var option = document.createElement('option');
 		option.className = 'firstOptionType';
@@ -163,9 +150,9 @@ function createSelect(list, type){
 }
 
 function showEditOrderWindow(event) {
-	document.querySelector('.windowEditOrder').style.display = "none";
-	document.querySelector('.windowMessage').style.display = "none";
-	document.querySelector('.check').style.display = "none";
+	getNode('.windowEditOrder').style.display = "none";
+	getNode('.windowMessage').style.display = "none";
+	getNode('.check').style.display = "none";
 	var target = $(event.target);
 	idOrderVar = target.closest('tr').find('.idOrderTable').text();
 	dateStartVar = target.closest('tr').find('.dataStartOrderTable').text();
@@ -178,34 +165,34 @@ function showEditOrderWindow(event) {
 	totalVar = target.closest('tr').find('.totalAmountTable').text();
 	numberRoomVar = target.closest('tr').find('.numberRoomOrderTable').text();
 
-	document.querySelector('.dateStart').value = dateStartVar;
-	document.querySelector('.dateEnd').value = dateEndVar;
-	document.querySelector('.bed').value = roomVar;
-	document.querySelector('.person').value = personVar;
-	document.querySelector('.totalPay').innerHTML = totalVar;
-	document.querySelector('.typeRoom').value = typeRoomVar;
+	getNode('.dateStart').value = dateStartVar;
+	getNode('.dateEnd').value = dateEndVar;
+	getNode('.bed').value = roomVar;
+	getNode('.person').value = personVar;
+	getNode('.totalPay').innerHTML = totalVar;
+	getNode('.typeRoom').value = typeRoomVar;
 	
 	switch (statusVar) {
 	case 1: {
-		document.querySelector('.windowEditOrder').style.display = "block";
+		getNode('.windowEditOrder').style.display = "block";
 		break;
 	}
 	case 2: {
-		document.querySelector('.check').style.display = "block";
+		getNode('.check').style.display = "block";
 		insertDataCheck();
 		break;
 	}
 	case 3: {
-		var message = document.querySelector('.orderStatusMess').value;
-		document.querySelector('.message').style.weight= "200px";
-		document.querySelector('.message').innerHTML = message;
-		document.querySelector('.windowMessage').style.display = "block";
+		var message = getNode('.orderStatusMess').value;
+		getNode('.message').style.weight= "200px";
+		getNode('.message').innerHTML = message;
+		getNode('.windowMessage').style.display = "block";
 		break;
 	}
 	case 4: {
-		var message = document.querySelector('.orderStatusMess').value;
-		document.querySelector('.message').innerHTML = message;
-		document.querySelector('.windowMessage').style.display = "block";
+		var message = getNode('.orderStatusMess').value;
+		getNode('.message').innerHTML = message;
+		getNode('.windowMessage').style.display = "block";
 		break;
 	}
 	}
@@ -213,153 +200,118 @@ function showEditOrderWindow(event) {
 }
 
 function insertDataCheck() {
-	document.querySelector('.checkNameInsert').innerHTML = nameUser;
-	document.querySelector('.checkSurnameInsert').innerHTML = surnameUser;
-	document.querySelector('.checkInInsert').innerHTML = dateStartVar;
-	document.querySelector('.checkOutInsert').innerHTML = dateEndVar;
-	document.querySelector('.numberRoomInsert').innerHTML = numberRoomVar;
-	document.querySelector('.typeRoomRoomInsert').innerHTML = typeRoomValue;
-	document.querySelector('.totalInsert').innerHTML = totalVar;
-	document.querySelector('.idOrderCheckInsert').innerHTML = idOrderVar;
+	getNode('.checkNameInsert').innerHTML = nameUser;
+	getNode('.checkSurnameInsert').innerHTML = surnameUser;
+	getNode('.checkInInsert').innerHTML = dateStartVar;
+	getNode('.checkOutInsert').innerHTML = dateEndVar;
+	getNode('.numberRoomInsert').innerHTML = numberRoomVar;
+	getNode('.typeRoomRoomInsert').innerHTML = typeRoomValue;
+	getNode('.totalInsert').innerHTML = totalVar;
+	getNode('.idOrderCheckInsert').innerHTML = idOrderVar;
 	
 }
 
-function deleteUserOrder() {
-	var errorMessage = document.querySelector('.orderDeleteError').value;
-	var deleteOK = document.querySelector('.deleteOK').value;
-	var params = 'action=orderdelete' + '&' + 'id=' + idOrderVar;
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			if (request.responseText == "OK") {
-				showPersonalPage();
-				document.querySelector('.message').innerHTML = deleteOK;
-				document.querySelector('.windowMessage').style.display = "block";
-			}
-			if (request.responseText == "error") {
-				logOut();
-				document.querySelector('.windowLogIn').style.display = "block";
-				loginCallBack = function() {
-					deleteUserOrder();
-				}
-			}
-			if (request.responseText == "errordelete") {
-				document.querySelector('.message').innerHTML = errorMessage;
-				document.querySelector('.windowConfirmation').style.display = "none";
-				document.querySelector('.windowMessage').style.display = "block";
-			}
+async function deleteUserOrder() {
+	var errorMessage = getNode('.orderDeleteError').value;
+	var deleteOK = getNode('.deleteOK').value;
+    var ObjectOrder = {
+        orderId: idOrderVar
+    }
+    try {
+        await deleteAJAX('order', "" , JSON.stringify(ObjectOrder));
+        showPersonalPage();
+		getNode('.message').innerHTML = deleteOK;
+		getNode('.windowMessage').style.display = "block";
+	} catch (error) {
+        logOut();
+		getNode('.windowLogIn').style.display = "block";
+		loginCallBack = function() {
+			deleteUserOrder();
 		}
 	}
-	request.open('POST', 'Servlet');
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send(params);
+
+
 }
 
 function closeMessageConfirmation() {
-	document.querySelector('.windowConfirmation').style.display = "none";
+	getNode('.windowConfirmation').style.display = "none";
 }
 
 function closeWindowEditOrder() {
-	document.querySelector('.windowEditOrder').style.display = "none";
+	getNode('.windowEditOrder').style.display = "none";
 
 }
 
-function updateUserOrder() {
+async function updateUserOrder() {
 	if (relogin) {
-		if(!validateData(document.querySelector('.dateStart').value)) {
-			var incorrectName = document.querySelector('.errorCheckIn').value;
-			document.querySelector('.errorOrder').innerHTML = incorrectName;
+		if(!validateData(getNode('.dateStart').value)) {
+			var incorrectName = getNode('.errorCheckIn').value;
+			getNode('.errorOrder').innerHTML = incorrectName;
 			return;
 		} 
-		if(!validateData(document.querySelector('.dateEnd').value)) {
-			var incorrectName = document.querySelector('.errorCheckOut').value;
-			document.querySelector('.errorOrder').innerHTML = incorrectName;
+		if(!validateData(getNode('.dateEnd').value)) {
+			var incorrectName = getNode('.errorCheckOut').value;
+			getNode('.errorOrder').innerHTML = incorrectName;
 			return;
 		}
-		dateStartVar = document.querySelector('.dateStart').value;
-		dateEndVar = document.querySelector('.dateEnd').value;
-		roomVar = document.querySelector('.bed').value;
-		personVar = document.querySelector('.person').value;
-		typeRoomVar = document.querySelector('.typeRoom').value;
-		var date = new Date(dateStartVar);
-		var curr_month2 = date.getMonth() + 1;
-		dateStartVar = ((String(date.getFullYear()).length == 1) ? "0"
-				+ date.getFullYear() : date.getFullYear())
-				+ "-"
-				+ ((String(curr_month2).length == 1) ? "0" + curr_month2
-						: curr_month2)
-				+ "-"
-				+ ((String((date.getDate())).length == 1) ? "0"
-						+ (date.getDate()) : (date.getDate()));
-		date = new Date(dateEndVar);
-		curr_month2 = date.getMonth() + 1;
-		dateEndVar = ((String(date.getFullYear()).length == 1) ? "0"
-				+ date.getFullYear() : date.getFullYear())
-				+ "-"
-				+ ((String(curr_month2).length == 1) ? "0" + curr_month2
-						: curr_month2)
-				+ "-"
-				+ ((String((date.getDate())).length == 1) ? "0"
-						+ (date.getDate()) : (date.getDate()));
+		dateStartVar = getNode('.dateStart').value;
+		dateEndVar = getNode('.dateEnd').value;
+		roomVar = getNode('.bed').value;
+		personVar = getNode('.person').value;
+		typeRoomVar = getNode('.typeRoom').value;
 	}
-	var update = document.querySelector('.updateMessage').value;
+	var update = getNode('.updateMessage').value;
 
-	var params = 'action=orderupdate' + '&' + 'id=' + idOrderVar + '&'
-			+ 'dateStart=' + dateStartVar + '&' + 'dateEnd=' + dateEndVar + '&'
-			+ 'bed=' + roomVar + '&' + 'person=' + personVar + '&'
-			+ 'idTypeRoom=' + typeRoomVar;
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			if (request.responseText == "OK") {
-				relogin = true;
-				showPersonalPage();
-				document.querySelector('.message').innerHTML = update;
-				document.querySelector('.windowMessage').style.display = "block";
-			}
-			if (request.responseText == "error") {
-				relogin = false;
-				logOut();
-				document.querySelector('.windowLogIn').style.display = "block";
-				loginCallBack = function() {
-					updateUserOrder();
-				}
-			}
-			if (request.responseText == "errordata") {
-				var error = document.querySelector('.messageErrorData').value;
-				document.querySelector('.errorOrder').innerHTML = error;
-			}
+	var ObjectOrder = {
+        orderId: idOrderVar,
+        dateStart: dateStartVar,
+        dateEnd: dateEndVar,
+        bedNumber: roomVar,
+        personNumber: personVar
+	}
 
+	var TypeRoom = {
+		id: typeRoomVar
+	}
+
+    ObjectOrder.typeRoom = TypeRoom;
+
+	try {
+        await put('order', "" ,  JSON.stringify(ObjectOrder));
+        relogin = true;
+		showPersonalPage();
+		getNode('.message').innerHTML = update;
+		getNode('.windowMessage').style.display = "block";
+	} catch (error) {
+        relogin = false;
+		logOut();
+		getNode('.windowLogIn').style.display = "block";
+		loginCallBack = function() {
+			updateUserOrder();
 		}
 	}
-	request.open('POST', 'Servlet');
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send(params);
+
 
 }
 
 function closeWindowPayment(){
-	document.querySelector('.windowPayment').style.display = "none";
+	getNode('.windowPayment').style.display = "none";
 }
 
 function roomPayment(){
 	var params = 'action=payment' + '&' + 'id=' + idOrderVar;
 	var request = new XMLHttpRequest();
-	var paymantOK =  document.querySelector('.paymentOK').value;
+	var paymantOK =  getNode('.paymentOK').value;
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && request.status == 200) {
 			if (request.responseText == "OK") {
 				showPersonalPage();
-				document.querySelector('.message').innerHTML = paymantOK;
-				document.querySelector('.windowMessage').style.display = "block";
+				getNode('.message').innerHTML = paymantOK;
+				getNode('.windowMessage').style.display = "block";
 			}
 			if (request.responseText == "error") {
 				logOut();
-				document.querySelector('.windowLogIn').style.display = "block";
+				getNode('.windowLogIn').style.display = "block";
 				loginCallBack = function() {
 					roomPayment();
 				}

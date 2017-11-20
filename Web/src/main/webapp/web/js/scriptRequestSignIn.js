@@ -4,30 +4,30 @@ function pressEnterSignUp(event) {
 }
 
 function signUp() {
-    var hiddenField = document.querySelector('.fillAllFields').value;
-    var name = document.querySelector('.nameInputReg').value;
-    var surname = document.querySelector('.surnameInputReg').value;
-    var email = document.querySelector('.emailInputReg').value;
-    var login = document.querySelector('.loginInputReg').value;
-    var pass = document.querySelector('.passInputReg').value;
-    var repass = document.querySelector('.repassInputReg').value;
+    var hiddenField = getNode('.fillAllFields').value;
+    var name = getNode('.nameInputReg').value;
+    var surname = getNode('.surnameInputReg').value;
+    var email = getNode('.emailInputReg').value;
+    var login = getNode('.loginInputReg').value;
+    var pass = getNode('.passInputReg').value;
+    var repass = getNode('.repassInputReg').value;
     var params = 'action=newuser&name=' + name + '&surname=' + surname
         + '&email=' + email + '&login=' + login + '&pass=' + pass;
     var entry = isEmptySignUp(name, surname, email, login, pass, repass);
     if (entry) {
-        document.querySelector('.errorSignUp').innerHTML = hiddenField;
+        getNode('.errorSignUp').innerHTML = hiddenField;
         return;
     }
 
     if (!validateName(name, surname)) {
-        var incorrectName = document.querySelector('.incorrectName').value;
-        document.querySelector('.errorSignUp').innerHTML = incorrectName;
+        var incorrectName = getNode('.incorrectName').value;
+        getNode('.errorSignUp').innerHTML = incorrectName;
         return;
     }
 
     if (!validateEmail(email)) {
-        var hiddenField = document.querySelector('.incorrectEmail').value;
-        document.querySelector('.errorSignUp').innerHTML = hiddenField;
+        var hiddenField = getNode('.incorrectEmail').value;
+        getNode('.errorSignUp').innerHTML = hiddenField;
         return;
     }
     var User = {
@@ -61,22 +61,22 @@ function isEmptySignUp(name, surname, email, login, pass, repass) {
 
 function validatePassword(pass, repass) {
     var result = true;
-    var hiddenField = document.querySelector('.shortPassword').value;
-    var hiddenField2 = document.querySelector('.passwordError').value;
+    var hiddenField = getNode('.shortPassword').value;
+    var hiddenField2 = getNode('.passwordError').value;
     if (pass == repass) {
         if (pass.length > 9) {
             result = true;
         } else {
-            document.querySelector('.errorSignUp').innerHTML = hiddenField;
+            getNode('.errorSignUp').innerHTML = hiddenField;
             return false;
         }
     } else {
-        document.querySelector('.errorSignUp').innerHTML = hiddenField2;
+        getNode('.errorSignUp').innerHTML = hiddenField2;
         return false;
     }
     if (!secondValidatePass(pass)) {
-        var incorrectPass = document.querySelector('.incorrectPass').value;
-        document.querySelector('.errorSignUp').innerHTML = incorrectPass;
+        var incorrectPass = getNode('.incorrectPass').value;
+        getNode('.errorSignUp').innerHTML = incorrectPass;
         return false;
     }
     return true;
@@ -90,41 +90,41 @@ function secondValidatePass(password) {
 async function sendNewUser(User) {
     try {
         await post('user', "", User);
-        var sign = document.querySelector('.signUpOK').value;
-        document.querySelector('.windowSignUp').style.display = "none";
-        document.querySelector('.windowMessage').style.display = "block";
-        document.querySelector('.message').innerHTML = sign;
+        var sign = getNode('.signUpOK').value;
+        getNode('.windowSignUp').style.display = "none";
+        getNode('.windowMessage').style.display = "block";
+        getNode('.message').innerHTML = sign;
 
-        document.querySelector('.loginInputReg').value = "";
-        document.querySelector('.nameInputReg').value = "";
-        document.querySelector('.surnameInputReg').value = "";
-        document.querySelector('.emailInputReg').value = "";
-        document.querySelector('.passInputReg').value = "";
-        document.querySelector('.repassInputReg').value = "";
+        getNode('.loginInputReg').value = "";
+        getNode('.nameInputReg').value = "";
+        getNode('.surnameInputReg').value = "";
+        getNode('.emailInputReg').value = "";
+        getNode('.passInputReg').value = "";
+        getNode('.repassInputReg').value = "";
     } catch (error) {
         var sign = "";
         if(error.message == "500") {
-            sign = document.querySelector('.signUpErrorlogin').value;
+            sign = getNode('.signUpErrorlogin').value;
         }
         if(error.message == "400") {
-            sign = document.querySelector('.incorrectDataError').value;
+            sign = getNode('.incorrectDataError').value;
         }
-        document.querySelector('.errorSignUp').innerHTML = sign;
+        getNode('.errorSignUp').innerHTML = sign;
     }
 }
 
 function closeMessage() {
-    document.querySelector('.windowMessage').style.display = "none";
+    getNode('.windowMessage').style.display = "none";
 
 }
 
 function closeWindowSignUp() {
-    document.querySelector('.windowSignUp').style.display = "none";
-    document.querySelector('.errorSignUp').innerHTML = "";
-    document.querySelector('.loginInputReg').value = "";
-    document.querySelector('.nameInputReg').value = "";
-    document.querySelector('.surnameInputReg').value = "";
-    document.querySelector('.emailInputReg').value = "";
-    document.querySelector('.passInputReg').value = "";
-    document.querySelector('.repassInputReg').value = "";
+    getNode('.windowSignUp').style.display = "none";
+    getNode('.errorSignUp').innerHTML = "";
+    getNode('.loginInputReg').value = "";
+    getNode('.nameInputReg').value = "";
+    getNode('.surnameInputReg').value = "";
+    getNode('.emailInputReg').value = "";
+    getNode('.passInputReg').value = "";
+    getNode('.repassInputReg').value = "";
 }

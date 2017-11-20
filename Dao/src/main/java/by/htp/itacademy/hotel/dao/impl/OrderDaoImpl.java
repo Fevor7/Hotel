@@ -37,12 +37,12 @@ public class OrderDaoImpl extends DaoImpl<Order> implements OrderDao {
 	}
 
 	@Override
-	public ListPage<Order> fetchSomethingOrder(ListPage<Order> listPage, Order order) throws HibernateException {
-		Query query = getEm().createQuery("select count(id) FROM Order o WHERE id_status = ?1 order by o.id desc");
-		query.setParameter(1, order.getOrderStatus().getId());
+	public ListPage<Order> fetchSomethingOrder(ListPage<Order> listPage, Long id) throws HibernateException {
+		Query query = getEm().createQuery("select count(id) FROM Order o WHERE o.orderStatus.id = ?1 order by o.id desc");
+		query.setParameter(1, id);
 		Long total = (Long) query.getSingleResult();
-		query = getEm().createQuery("select o FROM Order o WHERE id_status = ?1 order by o.id desc", Order.class);
-		query.setParameter(1, order.getOrderStatus().getId());
+		query = getEm().createQuery("select o FROM Order o WHERE o.orderStatus.id = ?1 order by o.id desc", Order.class);
+		query.setParameter(1, id);
 		query.setFirstResult(listPage.getMaxPerPage() * listPage.getPage());
 		query.setMaxResults(listPage.getMaxPerPage());
 		List<Order> list = query.getResultList();

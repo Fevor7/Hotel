@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
+<fmt:setLocale value="${language}" />
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 
 <fmt:bundle basename="pagecontent" prefix="paging.">

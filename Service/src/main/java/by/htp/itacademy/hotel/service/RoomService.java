@@ -37,11 +37,10 @@ public interface RoomService {
 	 * @param listPage
 	 * 
 	 * @param order
-	 * @param language
 	 * @return
 	 * @throws ServiceNoRoomFoundException
 	 */
-	ListPage<Room> searchRoomAdmin(ListPage<Room> listPage, Order order, String language)
+	ListPage<Room> searchRoomAdmin(ListPage<Room> listPage, Order order)
 			throws ServiceNoRoomFoundException;
 
 	/**

@@ -25,27 +25,11 @@ public interface OrderService {
 	 * of orders
 	 * 
 	 * @param listPage
-	 * 
-	 * @param order
 	 * @param user
 	 * 
 	 * @return
 	 */
-	ListPage<Order> orderList(ListPage<Order> listPage, Order order, User user, String language)
-			throws ServiceNoOrderFoundException;
-
-	/**
-	 * The method returns a list of all orders.
-	 * 
-	 * @param listPage
-	 * 
-	 * @param user
-	 * @param language
-	 * @return
-	 * @throws ServiceNoOrderFoundException
-	 */
-
-	ListPage<Order> orderListAll(ListPage<Order> listPage, User user, String language)
+	ListPage<Order> orderList(ListPage<Order> listPage, Long id, User user)
 			throws ServiceNoOrderFoundException;
 
 	/**
@@ -54,7 +38,6 @@ public interface OrderService {
 	 * @param listPage
 	 * 
 	 * @param user
-	 * @param language
 	 * @return
 	 * @throws ServiceNoOrderFoundException
 	 */
@@ -90,11 +73,10 @@ public interface OrderService {
 
 	/**
 	 * The method returns a list of stats orders
-	 * 
-	 * @param language
+	 *
 	 * @return
 	 * @throws ServiceException
 	 */
-	List<StatusOrder> fetchStatusList(String language) throws ServiceException;
+	List<StatusOrder> fetchStatusList() throws ServiceException;
 
 }

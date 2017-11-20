@@ -9,22 +9,22 @@ async function logOut(){
     try {
         await put("user/logOut");
         loginStatus = "none";
-        document.querySelector('.exit').style.display = "none";
-        var hiddenField = document.querySelector('.fieldLOGIN').value;
-        document.querySelector('.login').innerText = hiddenField;
-        document.querySelector('.exit').style.display = "none";
-        document.querySelector('.admin').style.display = "none";
+        getNode('.exit').style.display = "none";
+        var hiddenField = getNode('.fieldLOGIN').value;
+        getNode('.login').innerText = hiddenField;
+        getNode('.exit').style.display = "none";
+        getNode('.admin').style.display = "none";
     } catch (error) {
-        document.querySelector('.errorLogin').innerHTML = document.querySelector('.accessDenied').value;
+        getNode('.errorLogin').innerHTML = getNode('.accessDenied').value;
     }
 
 }
 
 function logIn() {
-	document.querySelector('.errorLogin').innerHTML = "";
-	var hiddenField3 = document.querySelector('.fillAllFields').value;
-	var log = document.querySelector('.loginLogIn').value;
-	var pass = document.querySelector('.passLogIn').value;
+	getNode('.errorLogin').innerHTML = "";
+	var hiddenField3 = getNode('.fillAllFields').value;
+	var log = getNode('.loginLogIn').value;
+	var pass = getNode('.passLogIn').value;
 	var User = {
 		login: log,
 		password: pass
@@ -32,7 +32,7 @@ function logIn() {
 	var url = 'user/login';
 	var data = JSON.stringify(User);
 	if (isEmpty(log, pass))
-		document.querySelector('.errorLogin').innerHTML = hiddenField3;
+		getNode('.errorLogin').innerHTML = hiddenField3;
 	else {
 		loginUser(url, "", data);
 	}
@@ -47,10 +47,10 @@ function isEmpty(str, str2) {
 async function loginUser(url, param, data) {
 	try {
 		access(await post(url, param, data));
-        document.querySelector('.loginLogIn').value = "";
-        document.querySelector('.passLogIn').value = "";
+        getNode('.loginLogIn').value = "";
+        getNode('.passLogIn').value = "";
 	} catch (error) {
-		document.querySelector('.errorLogin').innerHTML = document.querySelector('.accessDenied').value;
+		getNode('.errorLogin').innerHTML = getNode('.accessDenied').value;
 	}
 
 }
@@ -62,21 +62,21 @@ function access(response) {
     UserObject = newUser;
 	if (newUser.role == true) {
 		loginStatus = response.substring(4);
-		document.querySelector('.windowLogIn').style.display = "none";
-		document.querySelector('.login').innerText = newUser.name;
-		document.querySelector('.exit').style.display = "block";
-		document.querySelector('.errorLogin').innerHTML = "";
-		document.querySelector('.admin').style.display = "block";
+		getNode('.windowLogIn').style.display = "none";
+		getNode('.login').innerText = newUser.name;
+		getNode('.exit').style.display = "block";
+		getNode('.errorLogin').innerHTML = "";
+		getNode('.admin').style.display = "block";
 		if (typeof loginCallBack === 'function') {
 			loginCallBack();
 		}
 		;
 		loginCallBack = '';
 	} else {
-		document.querySelector('.windowLogIn').style.display = "none";
-		document.querySelector('.login').innerText = newUse.name;
-		document.querySelector('.exit').style.display = "block";
-		document.querySelector('.errorLogin').innerHTML = "";
+		getNode('.windowLogIn').style.display = "none";
+		getNode('.login').innerText = newUse.name;
+		getNode('.exit').style.display = "block";
+		getNode('.errorLogin').innerHTML = "";
 
 		if (typeof loginCallBack === 'function') {
 			loginCallBack();

@@ -27,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PersistenceException;
+
 /**
  * The class of this class is designed to execute business logic with order.
  * 
@@ -80,15 +82,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateOrderAdmin(Order order, User user) throws ServiceException {
+		System.out.println(order);
 		try {
-			statusUpdate(order);
-			if (order.getRoom().getId() == null) {
-				order.setRoom(null);
-			}
 			order.setUser(user);
 			orderDao.update(order);
 			LOG.info(LOG_ORDER_UPDATE + order + LOG_ADMIN + user.getId());
-		} catch (HibernateException e) {
+		} catch (HibernateException  e) {
 			LOG.error(LOG_ERROR + e.getMessage() + LOG_USER + user.getId());
 			throw new ServiceException(e.getMessage());
 		}
@@ -108,21 +107,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ListPage<Order> orderListAll(ListPage<Order> listPage, User user, String language)
-			throws ServiceNoOrderFoundException {
-		try {
-			listPage = orderDao.getAll(listPage);
-			loadingDundle(listPage.getData(), language);
-		} catch (HibernateException e) {
-			LOG.error(LOG_ERROR + e.getMessage() + LOG_USER + user.getId());
-		}
-		if (listPage.getData().isEmpty()) {
-			throw new ServiceNoOrderFoundException(ERROR_ORDER_FOUND);
-		}
-		return listPage;
-	}
-
-	@Override
 	public ListPage<Order> orderListUser(ListPage<Order> listPage, User user)
 			throws ServiceNoOrderFoundException {
 		try {
@@ -137,12 +121,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ListPage<Order> orderList(ListPage<Order> listPage, Order order, User user, String language)
+	public ListPage<Order> orderList(ListPage<Order> listPage, Long id, User user)
 			throws ServiceNoOrderFoundException {
 		try {
-			listPage = orderDao.fetchSomethingOrder(listPage, order);
-			loadingDundle(listPage.getData(), language);
+			if (id == 5) {
+				listPage = orderDao.getAll(listPage);
+			} else {
+				orderDao.fetchSomethingOrder(listPage, id);
+			}
 		} catch (HibernateException e) {
+
 			LOG.error(LOG_ERROR + e.getMessage() + LOG_USER + user.getId());
 		}
 		if (listPage.getData().isEmpty()) {
@@ -164,11 +152,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<StatusOrder> fetchStatusList(String language) throws ServiceException {
+	public List<StatusOrder> fetchStatusList() throws ServiceException {
 		List<StatusOrder> list = null;
 		try {
 			list = statusOrderDao.getAll();
-			setValue(list, language);
 		} catch (HibernateException e) {
 			LOG.error(LOG_ERROR + e.getMessage());
 		}
@@ -176,22 +163,6 @@ public class OrderServiceImpl implements OrderService {
 			throw new ServiceException(STATUS_LIST_ERROR);
 		}
 		return list;
-	}
-
-	/**
-	 * Method for updating the order status.
-	 * 
-	 * @param order
-	 * @throws DaoException
-	 */
-	private void statusUpdate(Order order) throws HibernateException {
-		if ((order.getRoom().getId() != null) && (order.getOrderStatus().getId() == 1)) {
-			BigDecimal totalAmount = calculationTotalCost(order);
-			if ((orderDao.get(order.getOrderId()).getOrderStatus()).equals(STATUS_WAIT)) {
-				order.getOrderStatus().setId(STATUS_CONFIRMED);
-			}
-			order.setTotalAmount(totalAmount);
-		}
 	}
 
 	/**
@@ -225,31 +196,6 @@ public class OrderServiceImpl implements OrderService {
 		Long differenceDay = (dateEnd.getTime() - dateStart.getTime()) / NUMBER_SECOND_IN_A_DAY + CORRECTION_FACTOR;
 		BigDecimal numberDays = new BigDecimal(differenceDay);
 		return numberDays;
-	}
-
-	private void loadingDundle(List<Order> list, String language) {
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, new Locale(language));
-		for (Order order : list) {
-			TypeRoom typeRoomNew = new TypeRoom();
-			typeRoomNew.setId(order.getTypeRoom().getId());
-			String value = order.getTypeRoom().getValue();
-			typeRoomNew.setValue(bundle.getString(value));
-			order.setTypeRoom(typeRoomNew);
-			StatusOrder statusNew = new StatusOrder();
-			statusNew.setId(order.getOrderStatus().getId());
-			value = order.getOrderStatus().getValue();
-			statusNew.setValue(bundle.getString(value));
-			order.setOrderStatus(statusNew);
-		}
-	}
-
-	private void setValue(List<StatusOrder> list, String language) {
-		Locale currentLocale = new Locale(language);
-		ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, currentLocale);
-		for (int i = 0; i < list.size(); i++) {
-			String value = list.get(i).getValue();
-			list.get(i).setValue(bundle.getString(value));
-		}
 	}
 
 }

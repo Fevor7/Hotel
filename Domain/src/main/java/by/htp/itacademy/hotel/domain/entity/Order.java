@@ -45,7 +45,7 @@ public class Order implements Serializable {
 	private BigDecimal maxPrice;
 	private BigDecimal totalAmount;
 	@OneToOne
-	@JoinColumn(name="id_status")
+	@JoinColumn(name="idStatus")
 	private StatusOrder orderStatus;
 	@Transient
 	private Integer pageNumber;
@@ -157,5 +157,19 @@ public class Order implements Serializable {
         this.minPrice = min;
         this.maxPrice = max;
         this.pageNumber = page;
+	}
+
+	public Order(Long id, Date start, Date end, Byte bed, Byte person, Long idType) {
+		this.orderId = id;
+		this.dateStart = start;
+		this.dateEnd = end;
+		this.bedNumber = bed;
+		this.personNumber = person;
+		this.typeRoom = new TypeRoom(idType, null);
+	}
+
+	public Order setOrderStatus(StatusOrder orderStatus) {
+		this.orderStatus = orderStatus;
+		return this;
 	}
 }

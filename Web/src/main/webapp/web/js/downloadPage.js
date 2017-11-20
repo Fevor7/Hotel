@@ -5,24 +5,24 @@ UserObject = '';
 
 function session() {
     var user = getUserSession();
-	var hiddenField = document.querySelector('.fieldLOGIN').value;
+	var hiddenField = getNode('.fieldLOGIN').value;
 	if (user.PromiseValue ===  undefined) {
-		document.querySelector('.login').innerText = hiddenField;
+		getNode('.login').innerText = hiddenField;
 	} else {
         UserObject = user;
 		nameUser = user.name;
 		surnameUser = user.surname;
 		loginStatus = nameUser;
-		document.querySelector('.login').innerText = nameUser;
-		document.querySelector('.exit').style.display = "block";
+		getNode('.login').innerText = nameUser;
+		getNode('.exit').style.display = "block";
 		if (role == 'true') {
-			document.querySelector('.admin').style.display = "block";
+			getNode('.admin').style.display = "block";
 		}
 	}
     loadPageSession();
 
-	document.querySelector('.closechar').innerHTML = "&#10006";
-	document.querySelector('.closeWindowLogin').innerHTML = "&#10006";
+	getNode('.closechar').innerHTML = "&#10006";
+	getNode('.closeWindowLogin').innerHTML = "&#10006";
 
 	var body = $(document);
 	var menu = $(".menu");
@@ -234,7 +234,7 @@ function fetchTemplate3(template) {
 function createPaging(listPage, method) {
 	var quantity = Math.ceil((listPage.total) / (listPage.maxPerPage));
 	if (quantity > 1) {
-		var insertDiv = document.querySelector('.insertRoomList');
+		var insertDiv = getNode('.insertRoomList');
 		var page = document.createElement('div');
 		createPageline(page);
 		createLink(quantity, listPage, page, method);
@@ -282,4 +282,8 @@ function createSpace() {
 	space.innerHTML = "&emsp;"
 	return space;
 
+}
+
+function getNode(nameClass) {
+    return document.querySelector(nameClass);
 }

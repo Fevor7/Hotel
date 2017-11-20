@@ -12,7 +12,7 @@ async function showRoomList(pageNumber) {
 
 function createTable(response, templateRoom, method) {
 	var listPage = JSON.parse(response);
-	var insertDiv = document.querySelector('.insertRoomList');
+	var insertDiv = getNode('.insertRoomList');
 	$('.insertRoomList').empty();
 	createPaging(listPage, method);
 	var list = listPage.data;
@@ -21,27 +21,27 @@ function createTable(response, templateRoom, method) {
 		var windowRoom = document.createElement('div');
 		windowRoom.className = "windowRoom";
 		windowRoom.innerHTML = templateRoom;
-		var insertRoom = document.querySelector('.insertRoomList');
+		var insertRoom = getNode('.insertRoomList');
 		insertRoom.appendChild(windowRoom);
-		var winEqImg = document.querySelector('.imageRoom');
+		var winEqImg = getNode('.imageRoom');
 		winEqImg.src = list[i].fotoAddress;
 		winEqImg.className = "roomImage";
-		var numberInsert = document.querySelector('.numberInsert');
+		var numberInsert = getNode('.numberInsert');
 		numberInsert.innerText = list[i].number;
 		numberInsert.className = 'number';
-		var typeRoomInsert = document.querySelector('.typeRoomInsert');
+		var typeRoomInsert = getNode('.typeRoomInsert');
 		typeRoomInsert.innerText = list[i].typeRoom.value;
 		typeRoomInsert.className = 'number';
-		var sizeInsert = document.querySelector('.sizeInsert');
+		var sizeInsert = getNode('.sizeInsert');
 		sizeInsert.innerText = list[i].size;
 		sizeInsert.className = 'number';
-		var personInsert = document.querySelector('.personInsert');
+		var personInsert = getNode('.personInsert');
 		personInsert.innerText = list[i].person;
 		personInsert.className = 'number';
-		var bedInsert = document.querySelector('.bedInsert');
+		var bedInsert = getNode('.bedInsert');
 		bedInsert.innerText = list[i].bed;
 		bedInsert.className = 'number';
-		var priceInsert = document.querySelector('.priceInsert');
+		var priceInsert = getNode('.priceInsert');
 		priceInsert.innerText = list[i].price;
 		priceInsert.className = 'number';
 	}

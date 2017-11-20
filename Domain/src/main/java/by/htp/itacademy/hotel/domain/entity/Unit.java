@@ -24,6 +24,10 @@ public class Unit implements Serializable {
 	private Long id;
 	private String value;
 
+	public Unit(Long id) {
+		this.value = value;
+	}
+
     public Unit(String value) {
         this.value = value;
     }
