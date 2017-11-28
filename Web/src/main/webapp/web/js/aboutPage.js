@@ -1,7 +1,7 @@
 async function showAboutPage() {
     try {
-        var response = await get2('about');
-        var template = await fetchTemplate3('about');
+        var response = await get('about');
+        var template = await fetchTemplate('about');
         compileAboutPage(response, template);
     } catch (error){
         console.log(error);

@@ -3,22 +3,10 @@ surnameUser = '';
 pageValue = '';
 UserObject = '';
 
-function session() {
-    var user = getUserSession();
-	var hiddenField = getNode('.fieldLOGIN').value;
-	if (user.PromiseValue ===  undefined) {
-		getNode('.login').innerText = hiddenField;
-	} else {
-        UserObject = user;
-		nameUser = user.name;
-		surnameUser = user.surname;
-		loginStatus = nameUser;
-		getNode('.login').innerText = nameUser;
-		getNode('.exit').style.display = "block";
-		if (role == 'true') {
-			getNode('.admin').style.display = "block";
-		}
-	}
+
+
+async function session() {
+    access(await get('session/user'));
     loadPageSession();
 
 	getNode('.closechar').innerHTML = "&#10006";
@@ -36,24 +24,12 @@ function session() {
 		}
 
 	});
-}
-
-async function getUserSession() {
-	try {
-		var userJSON = await get2('session/user');
-		var user = "";
-		if (userJSON!="") {
-			user = JSON.parse(userJSON);
-		}
-	} catch(error) {
-		console.log(error);
-	}
-	return user; 
+	addingListener();
 }
 
 async function loadPageSession() {
 	try {
-		var pageJSON = await get2('session/page');
+		var pageJSON = await get('session/page');
         if (pageJSON!="") {
             var pageValue  = JSON.parse(pageJSON);
             loadPage(pageValue.value);
@@ -72,6 +48,7 @@ function loadPage (value) {
             break;
         }
         case 'orderlist': {
+            verificationUser();
             showOrderListPage(0, '5');
             break;
         }
@@ -100,21 +77,6 @@ function loadPage (value) {
 
 function showOrderListAdminEdit() {
 	showOrderListAdmin('5');
-}
-
-function sessionDestoy() {
-	var params = 'action=sessionDestoy';
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-		}
-	}
-	request.open('POST', 'Servlet');
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send(params);
-
 }
 
 function selectPage(command, numberPage, orderStatus) {
@@ -154,29 +116,7 @@ function getParamsString(params) {
 	return result.substr(0, result.length - 1);
 }
 
-function get(baseUrl, params, callback) {
-	var params = getParamsString(params);
-	var url = 'Servlet' + baseUrl + params;
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			var response = request.responseText;
-			callback(null, response);
-		} else if (request.readyState == 4) {
-			callback({
-				message : request.status
-			})
-		}
-
-	}
-	request.open('GET', url, true);
-	request.setRequestHeader(securityHeaderName, securityHeaderValue);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded');
-	request.send('');
-}
-
-function get2(baseUrl, urlParams) {
+function get(baseUrl, urlParams) {
 	return ajax(baseUrl, urlParams, 'GET');
 }
 
@@ -214,20 +154,8 @@ function ajax(baseUrl, params, method, data) {
 	});
 }
 
-function fetchTemplate(template, callback) {
-	get('?action=template&', {
-		type : template
-	}, callback)
-}
-
-function fetchTemplate2(template) {
-	return get2('?action=template&', {
-		type : template
-	})
-}
-
-function fetchTemplate3(template) {
-	return get2('template/'+template, {});
+function fetchTemplate(template) {
+	return get('template/'+template, {});
 }
 
 
@@ -285,5 +213,8 @@ function createSpace() {
 }
 
 function getNode(nameClass) {
-    return document.querySelector(nameClass);
+	if(nameClass[0] ==='.') {
+        return document.querySelector(nameClass);
+	}
+	return document.getElementById(nameClass);
 }

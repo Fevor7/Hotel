@@ -19,7 +19,7 @@ public final class AddressPage {
 	public static final String PAGE_ERROR = "/error.html";
 	public static final String PAGE_ABOUT = "/WEB-INF/page/guest/about.jsp";
 	public static final String PAGE_USER_ORDER_LIST = "/WEB-INF/page/user/userOrderList.jsp";
-	public static final String PAGE_ROOM = "guest/roomPage";
+	public static final String PAGE_ROOM = "roomPage";
 	public static final String PAGE_ROOM_LIST = "/WEB-INF/page/guest/roomList.jsp";
 	public static final String PAGE_ROOM_LIST_ADMIN = "/WEB-INF/page/admin/roomListAdmin.jsp";
 	public static final String PAGE_ORDER_CHOOSE = "/WEB-INF/page/admin/orderChoose.jsp";

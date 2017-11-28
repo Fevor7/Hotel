@@ -5,8 +5,8 @@
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="pagecontent">
 	<div>
-		<span style="color: white"><fmt:message key="orderList.status"/>: </span> 
-		<select style="font-size: 15px;" onchange="showOrderListPage(0, this.value)" class="orderListChoose">
+		<span style="color: white"><fmt:message key="orderList.status"/>: </span>
+		<select style="font-size: 15px;" class="orderListChoose">
 			<option class="firstOptionType" value="5"><fmt:message key="orderList.all"/></option>
 		</select>
 	</div>

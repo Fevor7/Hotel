@@ -15,13 +15,13 @@ reloginAdmin = true;
 orderStatus = '';
 
 async function showOrderListPage(pageNumber, type) {
-	idStatusOrderVar = type;
+	idStatusOrderVar = this.value;
 	try {
-		var listPage = await get2('order?', {
+		var listPage = await get('order?', {
 			type: type,
 			pagenumber: pageNumber
 		});
-		var templateList = await fetchTemplate3('orderList');
+		var templateList = await fetchTemplate('orderList');
         getNode('.insertOrderList').innerHTML = templateList;
 		createTableOrderAdmin(listPage, type, pageNumber);
 	} catch (error) {
@@ -35,7 +35,7 @@ async function showOrderListPage(pageNumber, type) {
 
 async function createTableOrderAdmin(listPage, type, pageNumber) {
 	try {
-		var templateLine = await fetchTemplate3('tableLineAdmin');
+		var templateLine = await fetchTemplate('tableLineAdmin');
         fillDataTable(listPage, templateLine, type, pageNumber);
 	} catch (error) {
 		console.log(error);
@@ -244,8 +244,8 @@ function revertValueFilterOrderAdmin() {
 async function searchForRoomAdmin(pageNumber) {
 	var order = validationRoomAdmin(pageNumber);
 	try {
-        var listPage = await get2('admin/room?', order);
-        var template = await fetchTemplate3('room');
+        var listPage = await get('admin/room?', order);
+        var template = await fetchTemplate('room');
         createTableAdmin(listPage, template, 'roomsearchadmin');
 	} catch (error) {
 		console.log(error);
@@ -377,8 +377,8 @@ function selectRoom(number, id) {
 
 async function showOrderListAdmin(type) {
 	try {
-        var listTypeAndStatus = await get2('page/order');
-        var templateMenu = await fetchTemplate3('orderMenu');
+        var listTypeAndStatus = await get('page/order');
+        var templateMenu = await fetchTemplate('orderMenu');
         var list = JSON.parse(listTypeAndStatus);
         var listType = list.typeList;
         var listStatus = list.statusList;
@@ -399,8 +399,9 @@ function createMenu(listType ,listStatus, templateMenu) {
 
 async function showPageChooseTypeOrder(listStatus, type) {
 	try {
-        var templateChoose = await fetchTemplate3('orderChoose');
+        var templateChoose = await fetchTemplate('orderChoose');
 		getNode('.insertChooseTypeOrder').innerHTML = templateChoose;
+		getNode('.orderListChoose').addEventListener('change', () => showOrderListPage(0, this.value));
 		createSelect(listStatus, '.orderListChoose');
 		showOrderListPage(0, type);
 	} catch (error) {

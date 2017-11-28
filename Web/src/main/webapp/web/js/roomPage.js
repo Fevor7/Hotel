@@ -1,19 +1,34 @@
 async function showRoomPage(pageNumber) {
     try {
-        var template = await get2('page/room');
+        var template = await get('page/room');
         getNode('.insertPage').innerHTML = template;
-        loadFilterRoom();
+        await loadFilterRoom();
         showRoomList(pageNumber);
+        AddListenerRoom();
     } catch (error) {
         console.log(error);
     }
 }
 
+function AddListenerRoom() {
+    getNode('.dateStart').addEventListener('click', dateStartClick);
+    getNode('.dateStart').addEventListener('blur', dateStartClick);
+    getNode('.dateEnd').addEventListener('click', dateEndClick);
+    getNode('.dateEnd').addEventListener('blur', dateEndClick);
+    getNode('.inputMinPrice').addEventListener('keypress', ()=> enterPressMin(event));
+    getNode('.inputMinPrice').addEventListener('blur', onfocusMin );
+    getNode('.minPrice').addEventListener('input', priceMin);
+    getNode('.inputMaxPrice').addEventListener('keypress', () => enterPressMax(event));
+    getNode('.inputMaxPrice').addEventListener('blur', onfocusMax);
+    getNode('.maxPrice').addEventListener('input', priceMax);
+    getNode('.sendApplocationButton').addEventListener('click', () => showRoomPage(0));
+    getNode('.applySearchRoom').addEventListener('click', () => searchForRoom(0));
+}
 
 async function loadFilterRoom() {
     try {
-        var list = await get2('room/type');
-        var template = await fetchTemplate3('filterRoom');
+        var list = await get('room/type');
+        var template = await fetchTemplate('filterRoom');
         createWindowWithType(list, template, '.filterRoom');
     } catch (error) {
         console.log(error);
@@ -56,8 +71,8 @@ function searchForRoom(pageNumber) {
 
 async function sendRoomParameter(Order) {
     try {
-        var list = await get2('room?', Order);
-        var template = await fetchTemplate3('room');
+        var list = await get('room?', Order);
+        var template = await fetchTemplate('room');
         createTable(list, template, 'roomsearch');
     } catch (error) {
         console.log(error);

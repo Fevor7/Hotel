@@ -45,6 +45,7 @@ header:hover {
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+	text-align: center;
 }
 
 .insertPage {
@@ -102,3 +103,8 @@ A:active {
 .insertWindowNewOrder {
 	height: 0px;
 }
+
+.divCheck, .checkDiv {
+	text-align: center;
+}
+

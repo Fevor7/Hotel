@@ -22,6 +22,7 @@
 	display: none;
 	font-size: 15px;
 	max-width: 154px;
+	text-align: center;
 }
 
 .errorLogin {
@@ -84,6 +85,7 @@
 	right: 15px;
 	transform: translate(20%, -50%);
 	font-size: 20px;
+
 }
 
 .closeWindowLogin:hover {

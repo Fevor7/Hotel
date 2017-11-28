@@ -14,6 +14,7 @@ async function logOut(){
         getNode('.login').innerText = hiddenField;
         getNode('.exit').style.display = "none";
         getNode('.admin').style.display = "none";
+        showFirstPage();
     } catch (error) {
         getNode('.errorLogin').innerHTML = getNode('.accessDenied').value;
     }
@@ -58,6 +59,11 @@ async function loginUser(url, param, data) {
 
 
 function access(response) {
+	if(response.length === 0) {
+        var hiddenField = getNode('.fieldLOGIN').value;
+        getNode('.login').innerText = hiddenField;
+        return;
+	}
 	var newUser = JSON.parse(response);
     UserObject = newUser;
 	if (newUser.role == true) {

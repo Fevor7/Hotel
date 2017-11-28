@@ -122,3 +122,7 @@
 	font-weight: 700;
 	color: #a40000;
 }
+
+.inputMinPrice, inputMaxPrice {
+	width: 30px;
+}

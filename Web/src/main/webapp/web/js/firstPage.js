@@ -3,11 +3,11 @@ securityHeaderValue = "javathebest";
 
 async function showFirstPage(pageNumber) {
 	try {
-		var template = await get2('page/first');
+		var template = await get('page/first');
 		getNode('.insertPage').innerHTML = template;
 		animateSlider();
 		verificationUser();
-		loadWindowNewOrder();
+		await loadWindowNewOrder();
 	} catch (error) {
 		console.log(error);
 	}
@@ -24,23 +24,36 @@ function verificationUser() {
 		getNode('.exit').style.display = "none";
 		getNode('.admin').style.display = "none";
 	} else {
-		loginStatus = name;
-		getNode('.login').innerText = name;
-		getNode('.exit').style.display = "block";
-		if (role == 'true') {
-			getNode('.admin').style.display = "block";
-		}
+        trueUser(name, role);
 	}
+}
+
+function trueUser(name, role) {
+    loginStatus = name;
+    getNode('.login').innerText = name;
+    getNode('.exit').style.display = "block";
+    if (role == 'true') {
+        getNode('.admin').style.display = "block";
+    }
 }
 
 async function loadWindowNewOrder() {
 	try {
-		var template = await fetchTemplate3('newOrder');
-		var list = await get2('room/type');
+		var template = await fetchTemplate('newOrder');
+		var list = await get('room/type');
 		createWindowWithType(list, template, '.insertWindowNewOrder');
+		listenerNewOrder();
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+function listenerNewOrder() {
+	getNode('.dateStart').addEventListener('click', dateStartClick);
+	getNode('.dateStart').addEventListener('blur', dateStartClick);
+	getNode('.dateEnd').addEventListener('click', dateEndClick);
+	getNode('.dateEnd').addEventListener('blur', dateEndClick);
+	getNode('.sendApplocationButton').addEventListener('click', sendNewOrder);
 }
 
 function createWindowWithType(response, template, nameSelector) {

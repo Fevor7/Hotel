@@ -18,8 +18,10 @@ function closeWindowCheck(){
 
 async function showPersonalPage(){
     try {
-        var user = await get2('session/user');
-        var template = await fetchTemplate3('personalPage');
+        var user = await get('session/user');
+        var template = await fetchTemplate('personalPage');
+        var userObject = JSON.parse(user);
+        trueUser(userObject.name, userObject.role);
         createWindowInfo(user, template);
         showUserOrderList(0);
     } catch (error) {
@@ -59,10 +61,10 @@ function switchMenu(user, template){
 
 async function showUserOrderList(pageNumber) {
     try {
-        var listPage = await get2('order/user?', {
+        var listPage = await get('order/user?', {
             pagenumber: pageNumber
         });
-        var templateTableOrder = await  fetchTemplate3('userOrderList');
+        var templateTableOrder = await  fetchTemplate('userOrderList');
         createTableUserOrder(pageNumber, listPage, templateTableOrder);
     } catch (error) {
         console.log(error);
@@ -73,8 +75,8 @@ async function showUserOrderList(pageNumber) {
 async function createTableUserOrder(pageNumber, listPage, templateTableOrder){
     try {
         getNode('.insertOrderList').innerHTML = templateTableOrder;
-        var listTypeRoom = await get2('room/type');
-        var templateTableLine = await fetchTemplate3('tableLine');
+        var listTypeRoom = await get('room/type');
+        var templateTableLine = await fetchTemplate('tableLine');
         createTableOrder(pageNumber,listPage, templateTableLine, listTypeRoom);
         fillTypeRoom(listTypeRoom);
     } catch (error) {

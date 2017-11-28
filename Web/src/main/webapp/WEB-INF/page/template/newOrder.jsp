@@ -10,9 +10,9 @@
 		<div><h3><fmt:message key="header"/></h3></div>
 		
 		<span><fmt:message key="checkIn"/></span><br> 
-		<input type="date" class="dateStart" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" OnClick="dateStartClick()" onblur="dateStartClick()"><br><br> 	
+		<input type="date" class="dateStart" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>"><br><br>
 		<span><fmt:message key="checkOut"/></span><br> 
-		<input type="date" class="dateEnd" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" OnClick="dateEndClick()" onblur="dateEndClick()"><br><br>
+		<input type="date" class="dateEnd" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>"><br><br>
 		<span><fmt:message key="person"/></span><br>
 		
 		<select class="person">
@@ -38,7 +38,7 @@
 		<select class="typeRoom">
 		</select><br><br><br> 
 		
-		<input type="button" value="<fmt:message key="sendButton"/>" class="sendApplocationButton" OnClick="sendNewOrder()" />
+		<input type="button" value="<fmt:message key="sendButton"/>" class="sendApplocationButton"/>
 		<br><br> 
 		<input type="hidden" value="<fmt:message key="orderOk"/>" class="orderOk"> 
 		<input type="hidden" value="<fmt:message key="errorBed"/>" class="messageErrorBed">
