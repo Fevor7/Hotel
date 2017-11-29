@@ -4,13 +4,13 @@
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 <fmt:setLocale value="${language}"/>
-	<div align="center" class="paging" >
+	<div class="paging" >
 	<br>
 		<div class="topPaging"></div>
 	</div>
 
 <fmt:bundle basename="pagecontent" prefix="orderList.">	
-	<div class="orderList" align="center">
+	<div class="orderList">
 		<table class="myTable">
 			<thead>
 				<tr>
@@ -32,6 +32,6 @@
 	</div>
 </fmt:bundle>
 
-	<div align="center" class="paging" >
+	<div class="paging" >
 		<div class="bottomPaging"></div>
 	</div>

@@ -32,6 +32,7 @@
 	z-index: 501;
 	font-size: 15px;
 	width: 170px;
+	text-align: center;
 }
 
 .userIdEditOrder {
@@ -67,6 +68,7 @@
 	top: 10px;
 	left: 10px;
 	right: 260px;
+	text-align: center;
 }
 
 .userIdEditOrder {
@@ -80,4 +82,17 @@
 
 .colon {
 	color: white;
+}
+
+.colon {
+	color: white;
+}
+
+.orderList  {
+	margin: 0 auto;
+	max-width: 1050px;
+}
+
+.pagingOrder {
+	text-align: center;
 }

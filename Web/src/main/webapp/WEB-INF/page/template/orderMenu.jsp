@@ -4,7 +4,7 @@
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="pagecontent" prefix="">	
-	<div class="windowEditOrderAdmin" align="center">
+	<div class="windowEditOrderAdmin">
 	
 		<div><h3><fmt:message key="orderEdit.headAdmin"/> id:<span class="orderIdAdminEdit"></span></h3></div>
 		
@@ -16,9 +16,9 @@
 		<span class="userIdEditOrder roomIdEditOrder"></span>
 		<input type="hidden" class="numberIdInsert"/><br>
 		<span><fmt:message key="newOrder.checkIn"/></span><br>
-		<input type="date" class="dateStart"    OnClick="dateStartClick()" onblur="dateStartClick()"><br>
+		<input type="date" class="dateStart"><br>
 		<span><fmt:message key="newOrder.checkOut"/></span> 
-		<input type="date" class="dateEnd"  OnClick="dateEndClick()" onblur="dateEndClick()" ><br>
+		<input type="date" class="dateEnd"><br>
 		
 		<span><fmt:message key="orderList.personAb"/></span>
 		<span>&emsp;&emsp;</span>
@@ -41,26 +41,20 @@
 		</select><br>
 		
 		<span><fmt:message key="newOrder.typeRoom"/></span>
-		<select class="typeRoom">
-			<c:forEach items="${typeRoomList}" var="i">
-				<option class = "firstOptionType" value="<c:out value="${i.id}"/>"><c:out value="${i.value}"/></option>
-			</c:forEach>
-		</select><br>
+		<select class="typeRoom"></select>
+		<br>
 		<span><fmt:message key="orderList.status"/></span><br>
-		<select class="statusOrder">
-			<c:forEach items="${statusList}" var="i">
-				<option class = "firstOptionType" value="<c:out value="${i.id}"/>"><c:out value="${i.value}"/></option>
-			</c:forEach>
-		</select><br>
+		<select class="statusOrder"></select>
+		<br>
 		<input type="hidden" class="roomIdMenu">
 		<input type="text" class="userIdEditOrder totalEditOrder"><br>
-		<input  type="button" value="<fmt:message key="roomFilter.revert"/>" class="editOrderAdminButton Revert" OnClick="revertValueFilterOrderAdmin()"/><br>
-		<input  type="button" value="<fmt:message key="roomFilter.choose"/>" class="editOrderAdminButton chooseRoom" OnClick="searchForRoomAdmin(0)"/>
+		<input  type="button" value="<fmt:message key="roomFilter.revert"/>" class="editOrderAdminButton Revert"/><br>
+		<input  type="button" value="<fmt:message key="roomFilter.choose"/>" class="editOrderAdminButton chooseRoom"/>
 		<span>&emsp;</span>
-		<input  type="button" value="<fmt:message key="orderEdit.butSaveAdmin"/>" class="editOrderAdminButton save" OnClick="updateUserOrderAdmin()"/><br>
-		<input  type="button" value="<fmt:message key="orderList.list"/>" class="editOrderAdminButton orderlistFilter" OnClick="showOrderListAdminEdit()"/>
+		<input  type="button" value="<fmt:message key="orderEdit.butSaveAdmin"/>" class="editOrderAdminButton save"/><br>
+		<input  type="button" value="<fmt:message key="orderList.list"/>" class="editOrderAdminButton orderlistFilter"/>
 		<span>&emsp;</span>
-		<input  type="button" value="<fmt:message key="orderEdit.butDeleteAdmin"/>" class="editOrderAdminButton delete" OnClick="deleteUserOrderAdmin()"/>
+		<input  type="button" value="<fmt:message key="orderEdit.butDeleteAdmin"/>" class="editOrderAdminButton delete"/>
 		<input type="hidden" value="<fmt:message key="newOrder.errorData"/>" class="messageErrorData">
 		<input type="hidden" value="<fmt:message key="windowMessage.nothingFound"/>" class="messageRoomNotFound">
 		<input type="hidden" value="<fmt:message key="newOrder.errorCheckIn"/>" class="errorCheckIn"> 
@@ -71,4 +65,4 @@
 		<br><br><span class="errorOrder"></span>
 	</div>
 </fmt:bundle>
-<div class="insertChooseTypeOrder" align="center"></div>
+<div class="insertChooseTypeOrder"></div>

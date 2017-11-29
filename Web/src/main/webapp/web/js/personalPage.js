@@ -66,10 +66,23 @@ async function showUserOrderList(pageNumber) {
         });
         var templateTableOrder = await  fetchTemplate('userOrderList');
         createTableUserOrder(pageNumber, listPage, templateTableOrder);
+        addListenerPersonalPage();
     } catch (error) {
         console.log(error);
     }
 
+}
+
+function addListenerPersonalPage() {
+	getNode('.dateStart').addEventListener('click', dateStartClick);
+    getNode('.dateStart').addEventListener('blur', dateStartClick);
+    getNode('.dateEnd').addEventListener('click', dateEndClick);
+    getNode('.dateEnd').addEventListener('blur', dateEndClick);
+    getNode('.updateUserOrder').addEventListener('click', updateUserOrder);
+    getNode('.deleteUserOrder').addEventListener('click', deleteUserOrder);
+    getNode('.closeWindowEditOrder').addEventListener('click', closeWindowEditOrder);
+    getNode('.closeMessagePayment').addEventListener('click', roomPayment);
+    getNode('.closeWindowPayment').addEventListener('click', closeWindowPayment);
 }
 
 async function createTableUserOrder(pageNumber, listPage, templateTableOrder){
@@ -120,6 +133,7 @@ function fillData(order) {
 	}
 	getNode('.statusTable').innerHTML = order.orderStatus.value;
 	getNode('.statusTable').dataset.status = order.orderStatus.id;
+    getNode('.editOrderButton').addEventListener('click', ()=> showEditOrderWindow(event));
 }
 
 function createPagingOrder(inDiv, listPage, method) {

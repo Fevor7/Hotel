@@ -15,7 +15,7 @@ reloginAdmin = true;
 orderStatus = '';
 
 async function showOrderListPage(pageNumber, type) {
-	idStatusOrderVar = this.value;
+	idStatusOrderVar = type;
 	try {
 		var listPage = await get('order?', {
 			type: type,
@@ -91,6 +91,7 @@ function fillDataAdmin(order) {
 	}
 	getNode('.statusTable').innerHTML = order.orderStatus.value;
 	getNode('.statusTable').dataset.status = order.orderStatus.id;
+    getNode('.editOrderButton').addEventListener('click', ()=> showAdminEditOrder(event));
 }
 
 function showAdminEditOrder(event) {
@@ -384,10 +385,24 @@ async function showOrderListAdmin(type) {
         var listStatus = list.statusList;
         createMenu(listType ,listStatus, templateMenu);
         showPageChooseTypeOrder(listStatus, type);
+        addingListenerMenuPage();
 	} catch (error) {
 		console.log(error);
 	}
 
+
+}
+
+function addingListenerMenuPage() {
+    getNode('.dateStart').addEventListener('click', dateStartClick);
+    getNode('.dateStart').addEventListener('blur', dateStartClick);
+    getNode('.dateEnd').addEventListener('click', dateEndClick);
+    getNode('.dateEnd').addEventListener('blur', dateEndClick);
+    getNode('.Revert').addEventListener('click', revertValueFilterOrderAdmin);
+    getNode('.chooseRoom').addEventListener('click', () => searchForRoomAdmin(0));
+    getNode('.save').addEventListener('click', updateUserOrderAdmin);
+    getNode('.orderlistFilter').addEventListener('click', showOrderListAdminEdit);
+    getNode('.delete').addEventListener('click', deleteUserOrderAdmin);
 
 }
 
@@ -401,7 +416,7 @@ async function showPageChooseTypeOrder(listStatus, type) {
 	try {
         var templateChoose = await fetchTemplate('orderChoose');
 		getNode('.insertChooseTypeOrder').innerHTML = templateChoose;
-		getNode('.orderListChoose').addEventListener('change', () => showOrderListPage(0, this.value));
+		getNode('.orderListChoose').addEventListener('change', () => showOrderListPage(0, getNode('.orderListChoose').value));
 		createSelect(listStatus, '.orderListChoose');
 		showOrderListPage(0, type);
 	} catch (error) {

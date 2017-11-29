@@ -13,6 +13,6 @@
 	<td class="roomOrderTable"></td>
 	<td class="typeRoomTable" ></td>
 	<td class="totalAmountTable"></td>
-	<td><input type="button" value="edit" class="editOrderButton" OnClick="showEditOrderWindow(event)"/></td>
+	<td><input type="button" value="edit" class="editOrderButton"/></td>
 	<td class="statusTable" ></td>
 </fmt:bundle>	

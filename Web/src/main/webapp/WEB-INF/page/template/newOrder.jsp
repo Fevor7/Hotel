@@ -5,7 +5,7 @@
 
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="pagecontent" prefix="newOrder.">
-	<div class="clientOrder" align="center"><br>
+	<div class="clientOrder"><br>
 	
 		<div><h3><fmt:message key="header"/></h3></div>
 		

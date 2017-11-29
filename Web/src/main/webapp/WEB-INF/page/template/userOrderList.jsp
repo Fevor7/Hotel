@@ -6,7 +6,7 @@
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 
 <fmt:bundle basename="pagecontent" prefix="paging.">
-	<div align="center" class="pagingOrder" >
+	<div class="pagingOrder" >
 		<div class="topPaging"></div>
 	</div>
 </fmt:bundle>
@@ -37,28 +37,17 @@
 <fmt:bundle basename="pagecontent">
 
 
-	<div align="center" class="pagingOrder" >
+	<div class="pagingOrder" >
 		<div class="bottomPaging"></div>
 	</div>
-	
 
-
-	<div class="windowConfirmation" align="center"><br>
-		<span><fmt:message key="orderEdit.deleteMes"/></span><br><br>
-		<span><fmt:message key="orderEdit.id"/></span>
-		<span class="idOrderSave"></span><br><br>
-		<input class="closeMessage" type="button" value="<fmt:message key="windowMessage.yes"/>" OnClick="deleteUserOrder()"/>
-		<span>&emsp;&emsp;&emsp;</span>
-		<input class="closeMessage" type="button" value="<fmt:message key="windowMessage.no"/>" OnClick="closeMessageConfirmation()"/>
-	</div>
-	
-	<div class="windowEditOrder" align="center">
+	<div class="windowEditOrder">
 	
 		<div><h3><fmt:message key="orderEdit.header"/></h3></div>
 		
-		<input type="date" class="dateStart" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" OnClick="dateStartClick()" onblur="dateStartClick()">
+		<input type="date" class="dateStart" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>">
 		<span> - </span>
-		<input type="date" class="dateEnd" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" OnClick="dateEndClick()" onblur="dateEndClick()" ><br><br>
+		<input type="date" class="dateEnd" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" ><br><br>
 		<span><fmt:message key="roomList.person"/> &emsp;&emsp;&emsp;&emsp;&emsp;</span>
 		<span><fmt:message key="roomList.bed"/></span> <br>
 		
@@ -86,19 +75,19 @@
 		<input type="hidden" value="<fmt:message key="windowMessage.incorrectDataError"/>" class="messageErrorData">
 		<input type="hidden" value="<fmt:message key="newOrder.errorCheckIn"/>" class="errorCheckIn"> 
 		<input type="hidden" value="<fmt:message key="newOrder.errorCheckOut"/>" class="errorCheckOut"> 
-		<input  type="button" value=<fmt:message key="orderEdit.butSave"/> class="sendApplocationButton" OnClick="updateUserOrder()"/>
+		<input  type="button" class="sendApplocationButton updateUserOrder" value=<fmt:message key="orderEdit.butSave"/>>
 		<span>&emsp;&emsp;</span>
-		<input  type="button" value=<fmt:message key="orderEdit.butDelete"/> class="sendApplocationButton" OnClick="deleteUserOrder()"/><br><br>
-		<span class="closeWindowLogin" OnClick="closeWindowEditOrder()">&#10006;</span>
+		<input  type="button" class="sendApplocationButton deleteUserOrder" value=<fmt:message key="orderEdit.butDelete"/> /><br><br>
+		<span class="closeWindowLogin closeWindowEditOrder">&#10006;</span>
 		<span class="errorOrder"></span>
 	</div>
 
-<div class="windowPayment" align="center"><br>
+<div class="windowPayment"><br>
 	<span><fmt:message key="orderEdit.confirmed"/></span><br><br>
 	<span><fmt:message key="orderEdit.toPay"/>:</span>
 	<span class="totalPay"></span><br><br>
-	<input type="button" value="<fmt:message key="orderEdit.pay"/>" OnClick="roomPayment()" class="closeMessage"/>
-	<span class="closeWindowPayment" OnClick="closeWindowPayment()">&#10006;</span>
+	<input type="button" value="<fmt:message key="orderEdit.pay"/> class="closeMessage closeWindowPayment"/>
+	<span class="closeWindowPayment">&#10006;</span>
 </div>
 
 </fmt:bundle>
