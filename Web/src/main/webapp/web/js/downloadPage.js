@@ -7,7 +7,7 @@ UserObject = '';
 
 async function session() {
     access(await get('session/user'));
-    loadPageSession();
+    await loadPageSession();
 
 	getNode('.closechar').innerHTML = "&#10006";
 	getNode('.closeWindowLogin').innerHTML = "&#10006";
@@ -32,44 +32,44 @@ async function loadPageSession() {
 		var pageJSON = await get('session/page');
         if (pageJSON!="") {
             var pageValue  = JSON.parse(pageJSON);
-            loadPage(pageValue.value);
+            await loadPage(pageValue.value);
         } else {
-            showFirstPage();
+            await showFirstPage();
         }
 	} catch(error) {
 		console.log(error);
 	}
 }
 
-function loadPage (value) {
+async function loadPage (value) {
     switch (value) {
         case 'personalpage': {
-            showPersonalPage();
+            await showPersonalPage();
             break;
         }
         case 'orderlist': {
             verificationUser();
-            showOrderListPage(0, '5');
+            await showOrderListPage(0, '5');
             break;
         }
         case 'firstpage': {
-            showFirstPage();
+            await showFirstPage();
             break;
         }
         case 'aboutpage': {
-            showAboutPage();
+            await showAboutPage();
             break;
         }
         case 'roompage': {
-            showRoomPage(0);
+            await showRoomPage(0);
             break;
         }
         case 'orderlistadmin': {
-            showOrderListAdmin('5');
+            await showOrderListAdmin('5');
             break;
         }
         default: {
-            showFirstPage();
+            await showFirstPage();
             break;
         }
     }
@@ -131,6 +131,17 @@ function deleteAJAX(baseUrl, urlParams, data) {
 }
 
 function ajax(baseUrl, params, method, data) {
+    // var paramsString = getParamsString(params);
+    // var url = baseUrl + paramsString;
+    // var obj = {
+    //     method: method,
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: data
+    // }
+    // return fetch(url, obj).then(response => { return response.text()} );
+
 	return new Promise((resolve, reject) => {
 		var paramsString = getParamsString(params);
 		var url = baseUrl + paramsString;
@@ -150,7 +161,7 @@ function ajax(baseUrl, params, method, data) {
 		request.setRequestHeader('Content-Type',
 				'application/json');
 		request.send(data || '');
-		
+
 	});
 }
 

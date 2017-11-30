@@ -3,7 +3,7 @@ async function showRoomPage(pageNumber) {
         var template = await get('page/room');
         getNode('.insertPage').innerHTML = template;
         await loadFilterRoom();
-        showRoomList(pageNumber);
+        await showRoomList(pageNumber);
         AddListenerRoom();
     } catch (error) {
         console.log(error);

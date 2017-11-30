@@ -25,10 +25,11 @@ public class Unit implements Serializable {
 	private String value;
 
 	public Unit(Long id) {
-		this.value = value;
+		this.id = id;
 	}
 
     public Unit(String value) {
         this.value = value;
     }
+
 }

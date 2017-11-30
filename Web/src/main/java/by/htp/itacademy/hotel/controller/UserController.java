@@ -27,7 +27,8 @@ public class UserController {
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
 		ResponseEntity<User> response = null;
 		try {
-			User newUser = userService.logIn(user);
+            System.out.println(user);
+            User newUser = userService.logIn(user);
 			newUser.setHashCodePass(null);
 			session.setAttribute(SESSION_PARAMETER_USER, newUser);
 			response = new ResponseEntity<>(newUser, HttpStatus.OK);

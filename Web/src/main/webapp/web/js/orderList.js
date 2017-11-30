@@ -214,17 +214,18 @@ async function deleteUserOrderAdmin() {
         orderId: idOrderVarAdmin
     }
     try {
-        await deleteAJAX('order', "" , JSON.stringify(ObjectOrder));
+        await deleteAJAX('order', "", JSON.stringify(ObjectOrder));
         showOrderListAdmin('5');
-		getNode('.message').innerHTML = deleteOK;
-		getNode('.windowMessage').style.display = "block";
+        getNode('.message').innerHTML = deleteOK;
+        getNode('.windowMessage').style.display = "block";
     } catch (error) {
         logOut();
-		getNode('.windowLogIn').style.display = "block";
-		loginCallBack = function() {
-			deleteUserOrderAdmin();
-		}
+        getNode('.windowLogIn').style.display = "block";
+        loginCallBack = function () {
+            deleteUserOrderAdmin();
+        }
     }
+}
 
 function revertValueFilterOrderAdmin() {
 	getNode('.errorOrder').innerHTML = "";
@@ -270,7 +271,7 @@ async function createTableAdmin(response, templateRoom, method) {
         butt.className = 'selectRoomButtonLast';
 	}
 	createPagingRoomAdmin(listPage, method);
-	
+
 }
 
 function createPagingRoomAdmin(listPage, method) {
@@ -290,7 +291,7 @@ function validationRoomAdmin(pageNumber) {
 		var incorrectName = getNode('.errorCheckIn').value;
 		getNode('.errorOrder').innerHTML = incorrectName;
 		return;
-	} 
+	}
 	if(!validateData(getNode('.dateEnd').value)) {
 		var incorrectName = getNode('.errorCheckOut').value;
 		getNode('.errorOrder').innerHTML = incorrectName;
@@ -337,11 +338,11 @@ function validationRoomAdmin(pageNumber) {
 }
 
 function validateData(data) {
-	return (/[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])/.test(data)); 
+	return (/[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])/.test(data));
 }
 
 function validateNumber(number) {
-	return (/[0-9]/.test(number)); 
+	return (/[0-9]/.test(number));
 }
 
 function selectRoom(number, id) {

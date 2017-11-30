@@ -39,7 +39,7 @@
 		</select><br><br><br> 
 		
 		<input type="button" value="<fmt:message key="sendButton"/>" class="sendApplocationButton"/>
-		<input type="button" value="aaa" onclick="getBundle()"/>
+		<input type="button" value="aaa"/>
 		<br><br> 
 		<input type="hidden" value="<fmt:message key="orderOk"/>" class="orderOk"> 
 		<input type="hidden" value="<fmt:message key="errorBed"/>" class="messageErrorBed">

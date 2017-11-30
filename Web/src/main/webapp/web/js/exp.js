@@ -23,3 +23,5 @@ function addingListener(){
     getNode('.closeWindowPayment').addEventListener('click', closeWindowCheck);
     getNode('.printCheck').addEventListener('click', printCheck);
 }
+
+
