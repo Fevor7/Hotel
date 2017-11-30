@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 
-    <fmt:bundle basename="pagecontent" prefix="head.">
+    <fmt:bundle basename="pagecontent" prefix="head_">
         <title><fmt:message key="hotel"/></title>
     </fmt:bundle>
 
@@ -47,7 +47,7 @@
         <img src="web/images/US.png" width="24" height="24" class="lang engImg">
     </div>
 
-    <fmt:bundle basename="pagecontent" prefix="menu.">
+    <fmt:bundle basename="pagecontent" prefix="menu_">
         <nav class="menu">
             <nav class="menuPart1">
                 <div class="menuStyle">
@@ -89,7 +89,7 @@
         </nav>
     </fmt:bundle>
 
-    <fmt:bundle basename="pagecontent" prefix="login.">
+    <fmt:bundle basename="pagecontent" prefix="login_">
         <div class="windowLogIn">
             <form class="formLogin">
                 <h3><fmt:message key="authorization"/></h3>
@@ -105,7 +105,7 @@
         </div>
     </fmt:bundle>
 
-    <fmt:bundle basename="pagecontent" prefix="signUp.">
+    <fmt:bundle basename="pagecontent" prefix="signUp_">
         <div class="windowSignUp">
             <h3><fmt:message key="windowSignUp"/></h3>
             <div class="signUpPart1">
@@ -140,7 +140,7 @@
         </div>
     </fmt:bundle>
 
-    <fmt:bundle basename="pagecontent" prefix="windowMessage.">
+    <fmt:bundle basename="pagecontent" prefix="windowMessage_">
         <div class="windowMessage">
             <div class="message"></div>
             <br><br>
@@ -161,16 +161,16 @@
 
 <div class="check">
     <fmt:bundle basename="pagecontent">
-        <div class="divCheck"><h3><fmt:message key="check.title"/></h3></div>
+        <div class="divCheck"><h3><fmt:message key="check_title"/></h3></div>
         <div class="checkPart1">
-            <span><fmt:message key="roomList.numberOrder"/>:</span><br><br>
-            <span><fmt:message key="signUp.name"/>:</span><br>
-            <span><fmt:message key="signUp.surname"/>:</span><br>
-            <span><fmt:message key="newOrder.checkIn"/>:</span><br>
-            <span><fmt:message key="newOrder.checkOut"/>:</span><br>
-            <span><fmt:message key="orderList.numberRoom"/>:</span><br>
-            <span><fmt:message key="orderList.typeRoom"/>:</span><br><br>
-            <span><fmt:message key="orderEdit.toPay"/>:</span><br><br>
+            <span><fmt:message key="roomList_numberOrder"/>:</span><br><br>
+            <span><fmt:message key="signUp_name"/>:</span><br>
+            <span><fmt:message key="signUp_surname"/>:</span><br>
+            <span><fmt:message key="newOrder_checkIn"/>:</span><br>
+            <span><fmt:message key="newOrder_checkOut"/>:</span><br>
+            <span><fmt:message key="orderList_numberRoom"/>:</span><br>
+            <span><fmt:message key="orderList_typeRoom"/>:</span><br><br>
+            <span><fmt:message key="orderEdit_toPay"/>:</span><br><br>
         </div>
         <div class="checkPart2">
             <span class="idOrderCheckInsert"></span><br><br>
@@ -184,7 +184,7 @@
         </div>
         <span class="closeWindowPayment">&#10006;</span>
         <div class="checkDiv">
-            <input type="button" value="<fmt:message key="check.print"/>" class="printCheck"/><br>
+            <input type="button" value="<fmt:message key="check_print"/>" class="printCheck"/><br>
         </div>
     </fmt:bundle>
 </div>

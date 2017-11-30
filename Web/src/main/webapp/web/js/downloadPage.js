@@ -218,3 +218,12 @@ function getNode(nameClass) {
 	}
 	return document.getElementById(nameClass);
 }
+
+async function getBundle() {
+    	var mapJSON = localStorage['ruBundle'];
+    	if (mapJSON === undefined) {
+            mapJSON = await get('bundle');
+            localStorage['ruBundle'] = mapJSON;
+		}
+    	return mapJSON;
+}

@@ -21,7 +21,7 @@
     <div class="hotelAbout"><p></p></div>
     <br>
     <hr>
-    <br>
+    <br>Map<String, String>
 
     <div class="listFacil"></div>
     <br>

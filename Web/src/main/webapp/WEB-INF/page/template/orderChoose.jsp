@@ -5,9 +5,9 @@
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="pagecontent">
 	<div>
-		<span class="colon"><fmt:message key="orderList.status"/>: </span>
+		<span class="colon"><fmt:message key="orderList_status"/>: </span>
 		<select class="orderListChoose">
-			<option class="firstOptionType" value="5"><fmt:message key="orderList.all"/></option>
+			<option class="firstOptionType" value="5"><fmt:message key="orderList_all"/></option>
 		</select>
 	</div>
 	<div class="insertOrderList"></div>

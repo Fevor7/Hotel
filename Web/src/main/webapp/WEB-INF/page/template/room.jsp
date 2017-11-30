@@ -4,26 +4,27 @@
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
 	
 <fmt:bundle basename="pagecontent" prefix="roomList.">
-			
+
 			<div class="winEqImg">
-				<img class="imageRoom" alt="test">
+				<img class="imageRoom" src="{{fotoAddress}}" alt="test">
 			</div>
 			<div align="center" class="divInfo">
 				<span class="titleRoom">№: </span> 
-				<span class="numberInsert"></span><br>
+				<span class="numberInsert">{{number}}</span><br>
 				
-				<span class="titleRoom"><fmt:message key="type"/>:</span> 
-				<span class="typeRoomInsert"></span><br>
-				<span class="titleRoom"><fmt:message key="size"/>:</span> 
-				<span class="sizeInsert"></span> <span>м²</span><br>
-				<span class="titleRoom"><fmt:message key="person"/>:</span> 
-				<span class="personInsert"></span><br>
-				<span class="titleRoom"><fmt:message key="bed"/>:</span> 
-				<span class="bedInsert" ></span><br>
-				<span class="titleRoom"><fmt:message key="price"/>:</span> 
+				<span class="titleRoom">{roomList_type}:</span>
+				<span class="typeRoomInsert">{{typeValueRoom}}</span><br>
+				<span class="titleRoom">{roomList_size}:</span>
+				<span class="sizeInsert">{{size}}</span> <span>м²</span><br>
+				<span class="titleRoom">{roomList_person}:</span>
+				<span class="personInsert">{{person}}</span><br>
+				<span class="titleRoom">{roomList_bed}:</span>
+				<span class="bedInsert">{{bed}}</span><br>
+				<span class="titleRoom">{roomList_price}:</span>
 				<span>$</span>
-				<span class="priceInsert">$ <fmt:message key="term"/></span>
-				<span><fmt:message key="term"/></span>
+				<span class="priceInsert">{{price}}</span>
+				<span>{roomList_term}</span>
 				<button class="selectRoomButton">SELECT</button>
 			</div>
+
 </fmt:bundle>

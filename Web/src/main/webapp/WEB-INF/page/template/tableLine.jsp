@@ -4,7 +4,6 @@
 <%@ taglib prefix="r" uri="http://anydoby.com/simpletags"%>
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 <fmt:setLocale value="${language}"/>
-<fmt:bundle basename="pagecontent" prefix="orderList.">
 	<td class="idOrderTable"></td>
 	<td class="numberRoomOrderTable"></td>
 	<td class="dataStartOrderTable"></td>
@@ -15,4 +14,3 @@
 	<td class="totalAmountTable"></td>
 	<td><input type="button" value="edit" class="editOrderButton"/></td>
 	<td class="statusTable" ></td>
-</fmt:bundle>	

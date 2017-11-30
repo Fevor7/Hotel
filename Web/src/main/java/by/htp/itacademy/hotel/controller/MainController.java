@@ -16,10 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static by.htp.itacademy.hotel.util.Parameter.*;
 
@@ -74,6 +71,14 @@ public class MainController extends  AbstractController{
         session.setAttribute(REQUEST_ACTION_LANGUAGE, value);
     }
 
+    @GetMapping("bundle")
+    public ResponseEntity<Map<String, String>> getBundle() {
+        Locale currentLocale = new Locale("ru");
+        ResourceBundle bundle = ResourceBundle.getBundle(PAGE_CONTENT, currentLocale);
+        Map<String, String> map = fetchMapWithBundle(bundle);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     private void settingLanguage(HttpSession session) {
         Object languageValue = session.getAttribute(REQUEST_ACTION_LANGUAGE);
         if (languageValue == null) {
@@ -101,5 +106,16 @@ public class MainController extends  AbstractController{
             facilitiesHotel.setValue(bundle.getString(value));
         }
     }
+
+    private Map<String, String> fetchMapWithBundle(ResourceBundle bundle) {
+        Map<String, String> map = new HashMap<>();
+        Enumeration<String> keys = bundle.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            map.put(key, bundle.getString(key));
+        }
+        return map;
+    }
+
 
 }

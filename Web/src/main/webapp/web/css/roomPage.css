@@ -123,6 +123,6 @@
 	color: #a40000;
 }
 
-.inputMinPrice, inputMaxPrice {
+.inputMinPrice, .inputMaxPrice {
 	width: 30px;
 }

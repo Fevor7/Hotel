@@ -9,7 +9,7 @@
 		<div class="topPaging"></div>
 	</div>
 
-<fmt:bundle basename="pagecontent" prefix="orderList.">	
+<fmt:bundle basename="pagecontent" prefix="orderList_">
 	<div class="orderList">
 		<table class="myTable">
 			<thead>

@@ -11,7 +11,7 @@
 	</div>
 </fmt:bundle>
 
-<fmt:bundle basename="pagecontent" prefix="orderList.">
+<fmt:bundle basename="pagecontent" prefix="orderList_">
 	<div>
 		<table class="myTable">
 			<thead>
@@ -43,13 +43,13 @@
 
 	<div class="windowEditOrder">
 	
-		<div><h3><fmt:message key="orderEdit.header"/></h3></div>
+		<div><h3><fmt:message key="orderEdit_header"/></h3></div>
 		
 		<input type="date" class="dateStart" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>">
 		<span> - </span>
 		<input type="date" class="dateEnd" min="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate type="time" value="${now}" pattern="yyyy-MM-dd"/>" ><br><br>
-		<span><fmt:message key="roomList.person"/> &emsp;&emsp;&emsp;&emsp;&emsp;</span>
-		<span><fmt:message key="roomList.bed"/></span> <br>
+		<span><fmt:message key="roomList_person"/> &emsp;&emsp;&emsp;&emsp;&emsp;</span>
+		<span><fmt:message key="roomList_bed"/></span> <br>
 		
 		<select class="person">
 			<option>1</option>
@@ -68,25 +68,24 @@
 			<option>5</option>
 		</select><br><br>
 		
-		<span><fmt:message key="newOrder.typeRoom"/></span> <br>
+		<span><fmt:message key="newOrder_typeRoom"/></span> <br>
 		
 		<select class="typeRoom"></select><br><br>
 		
-		<input type="hidden" value="<fmt:message key="windowMessage.incorrectDataError"/>" class="messageErrorData">
-		<input type="hidden" value="<fmt:message key="newOrder.errorCheckIn"/>" class="errorCheckIn"> 
-		<input type="hidden" value="<fmt:message key="newOrder.errorCheckOut"/>" class="errorCheckOut"> 
-		<input  type="button" class="sendApplocationButton updateUserOrder" value=<fmt:message key="orderEdit.butSave"/>>
+		<input type="hidden" value="<fmt:message key="windowMessage_incorrectDataError"/>" class="messageErrorData">
+		<input type="hidden" value="<fmt:message key="newOrder_errorCheckIn"/>" class="errorCheckIn">
+		<input type="hidden" value="<fmt:message key="newOrder_errorCheckOut"/>" class="errorCheckOut">
+		<input  type="button" class="sendApplocationButton updateUserOrder" value=<fmt:message key="orderEdit_butSave"/>>
 		<span>&emsp;&emsp;</span>
-		<input  type="button" class="sendApplocationButton deleteUserOrder" value=<fmt:message key="orderEdit.butDelete"/> /><br><br>
+		<input  type="button" class="sendApplocationButton deleteUserOrder" value=<fmt:message key="orderEdit_butDelete"/> /><br><br>
 		<span class="closeWindowLogin closeWindowEditOrder">&#10006;</span>
 		<span class="errorOrder"></span>
 	</div>
 
 <div class="windowPayment"><br>
-	<span><fmt:message key="orderEdit.confirmed"/></span><br><br>
-	<span><fmt:message key="orderEdit.toPay"/>:</span>
+	<span><fmt:message key="orderEdit_confirmed"/></span><br><br>
 	<span class="totalPay"></span><br><br>
-	<input type="button" value="<fmt:message key="orderEdit.pay"/> class="closeMessage closeWindowPayment"/>
+	<input type="button" value="<fmt:message key="orderEdit_pay"/>" class="closeMessage closeWindowPayment"/>
 	<span class="closeWindowPayment">&#10006;</span>
 </div>
 

@@ -81,7 +81,7 @@ function addListenerPersonalPage() {
     getNode('.updateUserOrder').addEventListener('click', updateUserOrder);
     getNode('.deleteUserOrder').addEventListener('click', deleteUserOrder);
     getNode('.closeWindowEditOrder').addEventListener('click', closeWindowEditOrder);
-    getNode('.closeMessagePayment').addEventListener('click', roomPayment);
+   // getNode('.closeMessagePayment').addEventListener('click', roomPayment);
     getNode('.closeWindowPayment').addEventListener('click', closeWindowPayment);
 }
 

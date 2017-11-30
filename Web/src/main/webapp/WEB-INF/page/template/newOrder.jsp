@@ -4,7 +4,7 @@
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 
 <fmt:setLocale value="${language}"/>
-<fmt:bundle basename="pagecontent" prefix="newOrder.">
+<fmt:bundle basename="pagecontent" prefix="newOrder_">
 	<div class="clientOrder"><br>
 	
 		<div><h3><fmt:message key="header"/></h3></div>
@@ -39,6 +39,7 @@
 		</select><br><br><br> 
 		
 		<input type="button" value="<fmt:message key="sendButton"/>" class="sendApplocationButton"/>
+		<input type="button" value="aaa" onclick="getBundle()"/>
 		<br><br> 
 		<input type="hidden" value="<fmt:message key="orderOk"/>" class="orderOk"> 
 		<input type="hidden" value="<fmt:message key="errorBed"/>" class="messageErrorBed">

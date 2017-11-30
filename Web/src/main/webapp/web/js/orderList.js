@@ -226,8 +226,6 @@ async function deleteUserOrderAdmin() {
 		}
     }
 
-}
-
 function revertValueFilterOrderAdmin() {
 	getNode('.errorOrder').innerHTML = "";
 	getNode('.roomIdEditOrder').value = idRoomVarAdmin;
@@ -254,47 +252,22 @@ async function searchForRoomAdmin(pageNumber) {
 
 }
 
-function createTableAdmin(response, templateRoom, method) {
+async function createTableAdmin(response, templateRoom, method) {
 	var listPage = JSON.parse(response);
 	var insertDiv = getNode('.insertChooseTypeOrder');
 	$('.insertChooseTypeOrder').empty();
 	createPagingRoomAdmin(listPage, method);
 	var list = listPage.data;
 	for (i = 0; i<list.length; i++) {
-		var newTemplate = templateRoom;
-		var windowRoom = document.createElement('div');
-		windowRoom.className = "windowRoomAdmin";
-		windowRoom.innerHTML = templateRoom;
-		var insertRoom = getNode('.insertChooseTypeOrder');
-		insertRoom.appendChild(windowRoom);
-		var winEqImg = getNode('.imageRoom');
-		winEqImg.src = list[i].fotoAddress;
-		winEqImg.className = "roomImage";
-		var numberInsert = getNode('.numberInsert');
-		numberInsert.innerText = list[i].number;
-		numberInsert.className = 'number';
-		var typeRoomInsert = getNode('.typeRoomInsert');
-		typeRoomInsert.innerText = list[i].typeRoom.value;
-		typeRoomInsert.className = 'number';
-		var sizeInsert = getNode('.sizeInsert');
-		sizeInsert.innerText = list[i].size;
-		sizeInsert.className = 'number';
-		var personInsert = getNode('.personInsert');
-		personInsert.innerText = list[i].person;
-		personInsert.className = 'number';
-		var bedInsert = getNode('.bedInsert');
-		bedInsert.innerText = list[i].bed;
-		bedInsert.className = 'number';
-		var priceInsert = getNode('.priceInsert');
-		priceInsert.innerText = list[i].price;
-		priceInsert.className = 'number';
-		var butt = getNode('.selectRoomButton');
-		butt.onclick = function(i) {
-			return function() {
-				selectRoom(list[i].number, list[i].id);
-			}
-		}(i);
-		butt.className = 'selectRoomButtonLast';
+        var newTemplate = await parseTemplate(list[i], templateRoom);
+        var windowRoom = document.createElement('div');
+        windowRoom.className = "windowRoomAdmin";
+        windowRoom.innerHTML = newTemplate;
+        getNode('.insertChooseTypeOrder').appendChild(windowRoom);
+        var butt = getNode('.selectRoomButton');
+        butt.addEventListener('click', function(i) {
+        	return ()=> selectRoom(list[i].number, list[i].id);}(i));
+        butt.className = 'selectRoomButtonLast';
 	}
 	createPagingRoomAdmin(listPage, method);
 	
